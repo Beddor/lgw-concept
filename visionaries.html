@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Visionaries of Wonderland — The Looking Glass Wars</title>
-<meta name="description" content="The greatest worlds are never imagined by one person alone. Twenty-five years, twenty-five extraordinary artists — one civilization imagined together.">
+<meta name="description" content="Imagine a civilization. Twenty-five years, an extraordinary company of artists — one world imagined together.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -44,16 +44,22 @@
   h1.title{ font-family:var(--display); font-weight:900; font-size:clamp(32px,7.5vw,74px); line-height:1.02; letter-spacing:.03em; text-align:center; text-wrap:balance; text-shadow:0 0 60px rgba(143,215,255,.10); }
   h2.head{ font-family:var(--display); font-weight:700; font-size:clamp(26px,5.2vw,46px); letter-spacing:.03em; text-align:center; text-wrap:balance; }
   .sub{ font-family:var(--editorial); font-style:italic; font-size:clamp(18px,3vw,26px); color:var(--bone-dim); text-align:center; margin-top:16px; }
+  .imagine{ font-family:var(--editorial); font-style:italic; font-size:clamp(19px,3.4vw,28px); color:var(--glow); text-align:center; letter-spacing:.02em; }
 
-  .hero{ min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:calc(env(safe-area-inset-top) + 96px) var(--pad) 80px; gap:40px; }
-  .hero .cover{ width:min(66vw,320px); }
+  /* big segment headers */
+  .seg{ text-align:center; margin-bottom:clamp(34px,6vh,64px); }
+  .seg .seg-head{ font-family:var(--display); font-weight:700; font-size:clamp(30px,7vw,64px); line-height:1.04; letter-spacing:.05em; color:var(--bone); text-wrap:balance; text-shadow:0 0 50px rgba(143,215,255,.10); }
+  .seg .seg-sub{ font-family:var(--editorial); font-style:italic; font-size:clamp(18px,3.4vw,27px); color:var(--glow); margin-top:18px; }
+
+  .hero{ min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:calc(env(safe-area-inset-top) + 96px) var(--pad) 80px; gap:32px; }
+  .hero .cover{ width:min(88vw,720px); }
   .hero .cover img{ width:100%; height:auto; display:block; box-shadow:0 30px 90px rgba(0,0,0,.6), 0 0 70px rgba(143,215,255,.08); border:1px solid var(--rule); }
-  .lede{ max-width:44ch; margin:0 auto; display:flex; flex-direction:column; gap:1em; font-family:var(--editorial); font-size:clamp(19px,3.2vw,26px); line-height:1.45; color:var(--bone); }
+  .lede{ max-width:46ch; margin:0 auto; display:flex; flex-direction:column; gap:1em; font-family:var(--editorial); font-size:clamp(19px,3.2vw,26px); line-height:1.45; color:var(--bone); }
   .lede .dim{ color:var(--bone-dim); }
   .lede .tight{ gap:.1em; display:flex; flex-direction:column; }
   .lede b{ font-weight:500; }
 
-  /* Featured Visionaries */
+  /* Visionary / team rows */
   .visionary{ display:grid; grid-template-columns:1fr; gap:24px; align-items:center; padding:clamp(40px,7vh,80px) 0; border-top:1px solid var(--rule-soft); }
   .visionary:first-of-type{ border-top:none; }
   @media(min-width:820px){
@@ -62,21 +68,28 @@
   }
   .vimg img{ width:100%; height:auto; display:block; border:1px solid var(--rule); background:var(--void-2); }
   .vname{ font-family:var(--display); font-weight:700; font-size:clamp(24px,4.4vw,38px); letter-spacing:.02em; color:var(--bone); margin-bottom:16px; }
-  .vbio{ font-family:var(--editorial); font-style:italic; font-weight:300; font-size:clamp(19px,3vw,26px); line-height:1.42; color:var(--bone-dim); max-width:34ch; }
+  .vbio{ font-family:var(--editorial); font-style:italic; font-weight:300; font-size:clamp(18px,2.9vw,25px); line-height:1.44; color:var(--bone-dim); max-width:42ch; }
   .vbio b{ color:var(--bone); font-style:normal; font-weight:500; }
 
-  .statement{ text-align:center; }
   .statement h2.head span{ color:var(--glow); }
+
+  /* musical copy */
+  .musical-copy{ max-width:60ch; margin:44px auto 0; font-family:var(--editorial); font-size:clamp(18px,2.8vw,24px); line-height:1.5; color:var(--bone-dim); text-align:center; }
+  .musical-copy .q{ display:block; margin-top:1em; font-style:italic; color:var(--glow); font-size:clamp(21px,3.6vw,30px); }
 
   /* video facade */
   .ytfacade{ position:relative; background:#000 center/cover no-repeat; border:1px solid var(--rule); cursor:pointer; overflow:hidden; margin:0 auto; }
-  .ytfacade::before{ content:''; position:absolute; inset:0; background:rgba(6,5,9,.25); transition:background .3s ease; }
-  .ytfacade:hover::before{ background:rgba(6,5,9,.1); }
+  .ytfacade::before{ content:''; position:absolute; inset:0; background:rgba(6,5,9,.22); transition:background .3s ease; }
+  .ytfacade:hover::before{ background:rgba(6,5,9,.08); }
   .ytplay{ position:absolute; z-index:2; top:50%; left:50%; transform:translate(-50%,-50%); width:76px; height:76px; border-radius:50%; border:1px solid var(--glow); background:radial-gradient(circle, rgba(143,215,255,.20), rgba(6,5,9,.55) 72%); box-shadow:0 0 40px rgba(143,215,255,.18); cursor:pointer; padding:0; }
   .ytplay::after{ content:''; position:absolute; top:50%; left:56%; transform:translate(-50%,-50%); width:0;height:0; border-left:20px solid var(--glow); border-top:12px solid transparent; border-bottom:12px solid transparent; }
   .ytfacade iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; z-index:3; }
 
-  .keyart img{ width:100%; height:auto; display:block; border:1px solid var(--rule); margin-top:34px; }
+  .flavor{ max-width:46ch; margin:34px auto 0; font-family:var(--editorial); font-style:italic; font-size:clamp(19px,3.2vw,27px); line-height:1.45; color:var(--bone); text-align:center; }
+  .keyart img{ width:100%; height:auto; display:block; border:1px solid var(--rule); }
+
+  .btn{ display:inline-flex; align-items:center; gap:12px; font-family:var(--ui); font-size:12px; font-weight:500; letter-spacing:.24em; text-transform:uppercase; color:var(--void); background:var(--glow); border:1px solid var(--glow); padding:18px 44px; cursor:pointer; text-decoration:none; transition:all .35s ease; }
+  .btn:hover{ background:transparent; color:var(--glow); box-shadow:0 0 40px rgba(143,215,255,.2); }
 
   .rise{ opacity:0; transform:translateY(26px); transition:opacity 1.1s cubic-bezier(.2,.7,.2,1), transform 1.1s cubic-bezier(.2,.7,.2,1); }
   .rise.in{ opacity:1; transform:none; }
@@ -85,7 +98,7 @@
   footer{ padding:56px var(--pad) calc(env(safe-area-inset-bottom) + 48px); text-align:center; border-top:1px solid var(--rule-soft); }
   footer .fm{ font-family:var(--display); font-size:11px; letter-spacing:.34em; text-transform:uppercase; color:var(--bone-dim); }
   footer a{ color:var(--glow); text-decoration:none; }
-  a:focus-visible{ outline:2px solid var(--glow); outline-offset:4px; }
+  a:focus-visible,button:focus-visible{ outline:2px solid var(--glow); outline-offset:4px; }
   @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} body::after{animation:none} .rise{opacity:1!important;transform:none!important;transition:none} }
 </style>
 </head>
@@ -96,9 +109,10 @@
   <a class="back" href="index.html">&larr; Back</a>
 </nav>
 
-<!-- HERO: title + cover + intro -->
+<!-- HERO -->
 <section class="hero">
   <h1 class="title rise">VISIONARIES<br>OF WONDERLAND</h1>
+  <p class="imagine rise d1">Imagine a civilization.</p>
   <div class="cover rise d1"><img src="assets/img/viz-cover.webp" alt="Visions of Wonderland — collector's cover" loading="lazy"></div>
   <div class="lede rise d2">
     <p>The greatest worlds are never imagined by one person alone.</p>
@@ -113,33 +127,40 @@
     <div class="center" style="margin-bottom:clamp(30px,5vh,60px)"><span class="eyebrow rise">Featured Visionaries</span></div>
 
     <div class="visionary">
-      <div class="vimg rise"><img src="assets/img/viz-doug-chiang.webp" alt="Doug Chiang — card armies" loading="lazy"></div>
+      <div class="vimg rise"><img src="assets/img/viz-doug-chiang.webp" alt="Doug Chiang" loading="lazy"></div>
       <div class="vtext rise d1"><div class="vname">Doug Chiang</div><p class="vbio">The Academy Award winner who built the visual world of <b>Star Wars</b> gave Wonderland its folding card armies.</p></div>
     </div>
-
     <div class="visionary">
-      <div class="vimg rise"><img src="assets/img/viz-chris-appelhans.webp" alt="Chris Appelhans — Alyss" loading="lazy"></div>
-      <div class="vtext rise d1"><div class="vname">Chris Appelhans</div><p class="vbio">The Oscar winner behind the most-watched film in <b>Netflix</b> history gave Alyss her face &mdash; a princess in Wonderland, and a girl lost in Victorian England.</p></div>
+      <div class="vimg rise"><img src="assets/img/viz-chris-appelhans.webp" alt="Chris Appelhans — Rose / Redd" loading="lazy"></div>
+      <div class="vtext rise d1"><div class="vname">Chris Appelhans</div><p class="vbio">Captured Rose Heart before ambition became catastrophe &mdash; the girl who would become Redd, still recognizably herself.</p></div>
     </div>
-
     <div class="visionary">
       <div class="vimg rise"><img src="assets/img/viz-vincent-proce.webp" alt="Vincent Proce — Hatter Madigan" loading="lazy"></div>
-      <div class="vtext rise d1"><div class="vname">Vincent Proce</div><p class="vbio"><b>Guillermo del Toro&#39;s</b> creature designer gave Hatter Madigan his darkness &mdash; and his Warrior Alyss is the cover of this book.</p></div>
+      <div class="vtext rise d1"><div class="vname">Vincent Proce</div><p class="vbio"><b>Guillermo del Toro&#39;s</b> creature designer gave Hatter Madigan his darkness.</p></div>
     </div>
-
     <div class="visionary">
       <div class="vimg rise"><img src="assets/img/viz-vance-kovacs.webp" alt="Vance Kovacs — Queen Redd" loading="lazy"></div>
       <div class="vtext rise d1"><div class="vname">Vance Kovacs</div><p class="vbio">The artist behind <b>Black Panther</b> and the <b>Planet of the Apes</b> trilogy painted Queen Redd &mdash; and created the single most requested image in twenty-five years of LGW.</p></div>
     </div>
-
     <div class="visionary">
       <div class="vimg rise"><img src="assets/img/viz-brian-flora.webp" alt="Brian Flora — Wonderland environments" loading="lazy"></div>
       <div class="vtext rise d1"><div class="vname">Brian Flora</div><p class="vbio">The matte painter behind <b>The Matrix</b> and <b>Sin City</b> built Wonderland from the ground up.</p></div>
     </div>
-
     <div class="visionary">
-      <div class="vimg rise"><img src="assets/img/viz-ryan-meinerding.webp" alt="Ryan Meinerding — Heart Palace guardsman" loading="lazy"></div>
+      <div class="vimg rise"><img src="assets/img/viz-ryan-meinerding.webp" alt="Ryan Meinerding — Dodge Anders" loading="lazy"></div>
       <div class="vtext rise d1"><div class="vname">Ryan Meinerding</div><p class="vbio">The man who put every <b>Avenger</b> in their suit dressed the Heart Palace guardsman &mdash; long before the world knew his name.</p></div>
+    </div>
+    <div class="visionary">
+      <div class="vimg rise"><img src="assets/img/viz-tae-young-choi.webp" alt="Tae Young Choi — the Millinery" loading="lazy"></div>
+      <div class="vtext rise d1"><div class="vname">Tae Young Choi</div><p class="vbio">The Millinery trains Wonderland&#39;s most elite soldiers &mdash; and the <b>HATBOX</b> is the machine built to make them unstoppable.</p></div>
+    </div>
+    <div class="visionary">
+      <div class="vimg rise"><img src="assets/img/viz-branislav-hetzel.webp" alt="Branislav Hetzel — Wondertropolis" loading="lazy"></div>
+      <div class="vtext rise d1"><div class="vname">Branislav Hetzel</div><p class="vbio">Built <b>Wondertropolis</b> &mdash; and in doing so, proved that Wonderland was always a civilization.</p></div>
+    </div>
+    <div class="visionary">
+      <div class="vimg rise"><img src="assets/img/viz-ben-templesmith.webp" alt="Ben Templesmith — Hatter Madigan #3 cover" loading="lazy"></div>
+      <div class="vtext rise d1"><div class="vname">Ben Templesmith</div><p class="vbio">Ben Templesmith found the darkness inside Hatter Madigan &mdash; and made it beautiful.</p></div>
     </div>
   </div>
 </section>
@@ -152,19 +173,70 @@
   </div>
 </section>
 
-<!-- THE SOUNDS OF WONDER -->
+<!-- THE SOUNDS OF WONDER (musical) -->
 <section class="band">
-  <div class="wrap center">
-    <span class="eyebrow rise">The Sounds of Wonder</span>
-    <div class="ytfacade rise d1" data-yt="pDIHEpPvxgQ" style="max-width:340px;aspect-ratio:9/16;margin-top:34px;background-image:url('https://i.ytimg.com/vi/pDIHEpPvxgQ/hq720.jpg')"><button class="ytplay" aria-label="Play - Follow the Glow"></button></div>
+  <div class="wrap">
+    <div class="seg">
+      <div class="seg-head rise">The Sounds of Wonder</div>
+      <div class="seg-sub rise d1">When the heart can no longer speak&hellip; it sings.</div>
+    </div>
+    <div class="center">
+      <div class="ytfacade rise" data-yt="BaXb30RQfa8" style="max-width:340px;aspect-ratio:9/16;background-image:url('assets/img/viz-aow-thumb.webp')"><button class="ytplay" aria-label="Play - Follow the Glow"></button></div>
+    </div>
+    <p class="musical-copy rise">The Looking Glass Wars is a sweeping cinematic musical that reveals the history hidden inside one of the world&#39;s most beloved stories. Set across Victorian England and the breathtaking civilization of Wonderland, it follows Alyss, a young woman forced to rediscover the truth of who she is before she can reclaim the Queendom she was born to lead. At once an epic adventure and an intimate coming-of-age journey, it explores the questions every generation must answer&mdash;identity, belonging, courage, love, and the power of choosing your own path. Through breathtaking theatrical spectacle, unforgettable characters, and a soaring contemporary score, The Looking Glass Wars transforms a familiar classic into an original mythology for a new generation, asking one of the defining questions of our time:
+      <span class="q">Who gets to decide what&#39;s real?</span>
+    </p>
+  </div>
+</section>
+
+<!-- MEET THE TEAM -->
+<section class="band" style="background:var(--void-2)">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:clamp(30px,5vh,60px)"><span class="eyebrow rise">Meet the Team</span></div>
+
+    <div class="visionary">
+      <div class="vimg rise"><img src="assets/img/viz-team-shaun.webp" alt="Shaun McKenna" loading="lazy"></div>
+      <div class="vtext rise d1"><div class="vname">Shaun McKenna</div><p class="vbio">An award-winning English screenwriter, playwright and lyricist. McKenna is considered prolific and versatile, known for both original dramas and adaptations. His output ranges from screenplays to prime-time British TV, from large-scale arena spectaculars to straight plays, and from West End musicals to BBC radio and documentaries. A few of his credits include: <b>The Lord of the Rings &ndash; A Musical Tale</b>, Maddie, Heidi, Lautrec, La Cava, Rocky Road, and Return of Peter Pan.</p></div>
+    </div>
+    <div class="visionary">
+      <div class="vimg rise"><img src="assets/img/viz-team-pippa.webp" alt="Pippa Cleary" loading="lazy"></div>
+      <div class="vtext rise d1"><div class="vname">Pippa Cleary</div><p class="vbio">An English musical theatre composer, songwriter, lyricist and singer. She is the only female British composer to have had three musicals produced in the West End and was mentored by Claude-Michel Sch&ouml;nberg. A few of her credits include: Regards to Broadway, <b>The Great British Bake Off: The Musical</b>, My Son&#39;s A Queer (But What Can You Do?), The Secret Diary of Adrian Mole Aged 13&frac34;, In the Willows, and A Midsummer Night&#39;s Dream &ndash; The Musical.</p></div>
+    </div>
+    <div class="visionary">
+      <div class="vimg rise"><img src="assets/img/viz-team-frank.webp" alt="Frank Beddor" loading="lazy"></div>
+      <div class="vtext rise d1"><div class="vname">Frank Beddor</div><p class="vbio">Produced <b>There&#39;s Something About Mary</b>, after which he formed Automatic Pictures, a nexus of creative minds that develops projects across multiple platforms and mediums&mdash;film, publishing, theatre, games, audio, and TV. His sensational <em>Looking Glass Wars</em> novel became a New York Times bestseller, spawning an ever-expanding franchise craved by Alice fanatics the world over.</p></div>
+    </div>
+    <div class="visionary">
+      <div class="vimg rise"><img src="assets/img/viz-team-teresa.webp" alt="Teresa Lin" loading="lazy"></div>
+      <div class="vtext rise d1"><div class="vname">Teresa Lin</div><p class="vbio">Born in Taipei, Taiwan, and grew up in Tampa, Florida. She attended Duke University and the film program at USC. Her big break came as a writer on <b>Bones</b>. The work she&#39;s doing on The Looking Glass Wars is inspired by how changing an old narrative could redefine what is possible in a new generation.</p></div>
+    </div>
   </div>
 </section>
 
 <!-- HOUSE OF CARDS -->
+<section class="band">
+  <div class="wrap">
+    <div class="seg">
+      <div class="seg-head rise">House of Cards</div>
+      <div class="seg-sub rise d1">Every hand is dealt from here.</div>
+    </div>
+    <div class="center">
+      <div class="ytfacade rise" data-yt="vpHcnWnxfWg" style="max-width:900px;aspect-ratio:16/9;background-image:url('assets/img/viz-hoc-thumb.webp')"><button class="ytplay" aria-label="Play - House of Cards trailer"></button></div>
+    </div>
+    <p class="flavor rise">Deep beneath Heart Palace lies the House of Cards &mdash; the seat of Wonderland&#39;s government, where strategy, invention and power determine the fate of a civilization.</p>
+  </div>
+</section>
+
+<!-- BLADE OF TIME -->
 <section class="band" style="background:var(--void-2)">
-  <div class="wrap center keyart">
-    <span class="eyebrow rise">House of Cards</span>
-    <div class="rise d1"><img src="assets/img/viz-hoc-keyart.webp" alt="House of Cards — key art" loading="lazy" style="max-width:900px;margin:0 auto"></div>
+  <div class="wrap center">
+    <div class="seg">
+      <div class="seg-head rise">Blade of Time</div>
+      <div class="seg-sub rise d1">When memory becomes a weapon&hellip;</div>
+    </div>
+    <div class="keyart rise" style="max-width:520px;margin:0 auto"><img src="assets/img/viz-dormouse.webp" alt="The Dormouse — Blade of Time graphic novel" loading="lazy"></div>
+    <p class="flavor rise">The Dormouse&#39;s consciousness no longer belongs to one timeline. As Hatter Madigan is pulled between past and present&hellip; every decision threatens to rewrite history.</p>
+    <div class="rise" style="margin-top:52px"><button class="btn" type="button">Enter Wonderland</button></div>
   </div>
 </section>
 
@@ -179,7 +251,7 @@
   var rises=document.querySelectorAll('.rise');
   if(reduce||!('IntersectionObserver' in window)){ rises.forEach(function(e){e.classList.add('in');}); }
   else{
-    var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });},{threshold:0.18, rootMargin:'0px 0px -8% 0px'});
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });},{threshold:0.16, rootMargin:'0px 0px -8% 0px'});
     rises.forEach(function(e){ io.observe(e); });
   }
   document.querySelectorAll('.ytfacade').forEach(function(f){

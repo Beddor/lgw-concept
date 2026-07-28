@@ -227,6 +227,9 @@
   .tile.loaded .cap{ display:none; }
   .real-video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
 
+  .chapter .head-sm{ font-family:var(--display); font-weight:600; font-size:clamp(14px,3.2vw,20px); letter-spacing:.14em; color:var(--bone-dim); margin-bottom:22px; }
+  .chapter .sub-sm{ font-family:var(--editorial); font-style:italic; font-size:clamp(17px,3.4vw,24px); line-height:1.4; color:var(--glow); margin-top:24px; }
+  .quotes{ grid-template-columns:1fr !important; max-width:620px; margin-left:auto; margin-right:auto; }
   @media (prefers-reduced-motion: reduce){
     body::after{ animation:none; }
     .kenburns .ph{ animation:none; }
@@ -239,8 +242,11 @@
 
 <!-- ==================== ACT I - THE STORY (image -> black text) ==================== -->
 <section class="panel img kenburns">
-  <div class="art"><div class="ph" data-img="assets/img/01-act1-wonderland-panorama.webp" data-img-wide="assets/img/01-act1-wonderland-panorama-wide.webp"><div class="cap"><span class="k">Art · Panorama</span><span class="t">Wondertropolis · Chessboard Desert · House of Cards</span></div></div></div>
+  <div class="art"><div class="ph" data-img="assets/img/00-act1-lgw-logo.webp"></div></div>
   <div class="cue" aria-hidden="true"><span class="l"></span>Scroll</div>
+</section>
+<section class="panel img kenburns">
+  <div class="art"><div class="ph" data-img="assets/img/01-act1-wonderland-panorama.webp" data-img-wide="assets/img/01-act1-wonderland-panorama-wide.webp"><div class="cap"><span class="k">Art · Panorama</span><span class="t">Wondertropolis · Chessboard Desert · House of Cards</span></div></div></div>
 </section>
 <section class="panel card">
   <div class="content">
@@ -253,7 +259,6 @@
 <section class="panel card">
   <div class="content wide">
     <p class="line rise">For more than 160 years, the world has believed Wonderland was a story.</p>
-    <p class="line rise d1">A story imagined by Lewis Carroll&hellip; and shared with a young girl named Alice Liddell.</p>
     <p class="ask rise d2" style="margin-top:.7em">WHAT IF IT WAS <span class="em-blue">HISTORY?</span></p>
   </div>
 </section>
@@ -262,8 +267,8 @@
 </section>
 <section class="panel card">
   <div class="content">
-    <p class="line rise">It began with a seven-year-old princess&hellip;</p>
-    <p class="line rise d1">named <b>Alyss Heart.</b></p>
+    <p class="line rise">It began&hellip;</p>
+    <p class="line rise d1">with a seven-year-old princess. <b>ALYSS HEART.</b></p>
   </div>
 </section>
 <section class="panel img kenburns">
@@ -290,7 +295,8 @@
 <section class="panel card">
   <div class="content">
     <p class="line rise">The crossing saved her life.</p>
-    <p class="line rise d1">It separated them forever.</p>
+    <p class="line rise d1">Yet&hellip;</p>
+    <p class="line rise d2">it separated them for thirteen years.</p>
   </div>
 </section>
 <section class="panel img kenburns">
@@ -308,10 +314,14 @@
 </section>
 <section class="panel card">
   <div class="content wide">
-    <p class="line rise">Alone in Victorian England, Alyss told her story to an Oxford mathematician named Charles Dodgson &mdash;</p>
-    <p class="line rise d1">the man the world would come to know as <b>Lewis Carroll.</b></p>
-    <p class="line rise d2">He believed her grief. He believed her fear. He simply couldn&#39;t believe her world.</p>
-    <p class="line rise d3">He gave the world a story&hellip; instead of its <span class="em-blue">history.</span></p>
+    <p class="line rise">Alone in Victorian England&hellip;</p>
+    <p class="line rise d1">Alyss told her story to Charles Dodgson.</p>
+    <p class="line rise d1">He believed her grief.</p>
+    <p class="line rise d2">He believed her fear.</p>
+    <p class="line rise d2">He simply couldn&#39;t believe her world.</p>
+    <p class="line rise d3">He made the most human of mistakes.</p>
+    <p class="line rise d3">He gave the world a story&hellip;</p>
+    <p class="line rise d3">instead of its <span class="em-blue">history.</span></p>
   </div>
 </section>
 <section class="panel img kenburns">
@@ -319,8 +329,9 @@
 </section>
 <section class="panel card chapter">
   <div class="content">
-    <p class="b rise">DISCOVER THE TRUTH</p>
-    <small class="rise d1">Keep scrolling</small>
+    <p class="head-sm rise">PUT ASIDE WHAT YOU THINK YOU KNOW.</p>
+    <p class="b rise d1">DISCOVER THE TRUTH</p>
+    <p class="sub-sm rise d2">A princess was lost.<br>A queen was forged.</p>
   </div>
 </section>
 
@@ -330,9 +341,9 @@
 </section>
 <section class="panel card char">
   <div class="content">
-    <p class="ey rise">Act II &mdash; The People Who Shaped the War</p>
+    <p class="ey rise">The People Who Shaped the War</p>
     <p class="name rise d1">ALYSS HEART</p>
-    <p class="desc rise d2">She was raised to rule a civilization &mdash; and taught to believe it never existed.</p>
+    <p class="desc rise d2">She was born a princess.<br>She became a queen.</p>
   </div>
 </section>
 <section class="panel img kenburns">
@@ -364,20 +375,21 @@
 </section>
 <section class="panel card silence">
   <div class="content">
-    <p class="b rise">THEIR STORY CHANGED WONDERLAND.</p>
+    <p class="b rise">THEY CHANGED HISTORY.</p>
   </div>
 </section>
 
 <!-- ==================== ACT III - THE STORY THAT NEVER ENDED ==================== -->
-<section class="panel card book">
-  <div class="content" style="max-width:none">
-    <div class="cover rise" data-img="assets/img/14-act3-lgw-cover.webp"><span class="k" style="font-family:var(--ui);font-size:9px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--glow);opacity:.6">Cover</span><span class="t" style="font-family:var(--editorial);font-style:italic;font-size:15px;color:var(--bone-dim);opacity:.7;margin-top:6px">The Looking Glass Wars</span></div>
-  </div>
+<section class="panel img kenburns">
+  <div class="art"><div class="ph" data-img="assets/img/queen-alyss-pink.webp"><div class="cap"><span class="k">Art · Andrea Wicklund</span><span class="t">Queen Alyss</span></div></div></div>
 </section>
 <section class="panel card">
   <div class="content">
     <p class="ask rise">EVERYTHING BEGAN HERE.</p>
   </div>
+</section>
+<section class="panel img kenburns">
+  <div class="art"><div class="ph" data-img="assets/img/14-act3-lgw-cover.webp"><div class="cap"><span class="k">Cover</span><span class="t">The Looking Glass Wars</span></div></div></div>
 </section>
 
 <div class="stack-band">
@@ -395,8 +407,8 @@
 
   <!-- Gallery: Others become part of culture (6 rows of 3) -->
   <div class="band" style="padding-top:0"><div class="inner">
-    <span class="eyebrow rise">Some stories are read</span>
-    <h2 class="h rise d1">Others become part of culture.</h2>
+    <span class="eyebrow rise">Every mythology begins with a story</span>
+    <h2 class="h rise d1">But stories only become mythology when people begin carrying them into their own lives.</h2>
     <div class="montage gallery18">
       <div class="tile rise" data-img="assets/img/gal-cosplay-1.webp"><div class="cap"><div class="k">Cosplay</div></div></div>
       <div class="tile rise d1" data-img="assets/img/gal-cosplay-2.webp"><div class="cap"><div class="k">Cosplay</div></div></div>
@@ -440,9 +452,10 @@
 
   <!-- Closing -->
   <div class="band" style="padding-top:0"><div class="inner closing">
-    <p class="l rise">WHAT IF WONDERLAND WAS REAL ALL ALONG?</p>
-    <p class="l rise d1" style="margin-top:1em">Perhaps it always has been. Not because everyone could see it &mdash;</p>
-    <p class="l strong rise d2">because people carried it with them. In their imagination. In their art. In their lives.</p>
+    <p class="l rise">Wonderland never left them.</p>
+    <p class="l rise d1">In their imagination.</p>
+    <p class="l rise d2">In their hearts.</p>
+    <p class="l rise d2">In their lives.</p>
     <p class="final rise d3">IMAGINATION CHANGES REALITY.</p>
     <div class="creed rise" style="margin-top:38px">
       <p class="l">Every invention begins as an idea.</p>
