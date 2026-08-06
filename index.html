@@ -231,6 +231,21 @@
   .chapter .head-sm{ font-family:var(--display); font-weight:600; font-size:clamp(14px,3.2vw,20px); letter-spacing:.14em; color:var(--bone-dim); margin-bottom:22px; }
   .chapter .sub-sm{ font-family:var(--editorial); font-style:italic; font-size:clamp(17px,3.4vw,24px); line-height:1.4; color:var(--glow); margin-top:24px; }
   .quotes{ grid-template-columns:1fr !important; max-width:620px; margin-left:auto; margin-right:auto; }
+  /* Morpurgo quote */
+  .mquote{ max-width:720px; margin:0 auto; text-align:center; }
+  .mquote p{ font-family:var(--editorial); font-style:italic; font-size:clamp(20px,3.6vw,30px); line-height:1.45; color:var(--bone); }
+  .mquote cite{ display:block; margin-top:26px; font-family:var(--ui); font-style:normal; font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--glow); line-height:1.7; }
+  .mquote cite em{ font-style:italic; text-transform:none; letter-spacing:0; }
+  /* moved segments: Sound of Wonder + Meet the Team */
+  .seg{ text-align:center; margin-bottom:clamp(30px,5vh,56px); }
+  .seg-head{ font-family:var(--display); font-weight:900; font-size:clamp(30px,7vw,64px); line-height:1.04; letter-spacing:.04em; color:var(--bone); text-wrap:balance; text-shadow:0 0 50px rgba(143,215,255,.10); }
+  .seg-sub{ font-family:var(--editorial); font-style:italic; font-size:clamp(18px,3.4vw,27px); color:var(--glow); margin-top:16px; }
+  .musical-copy{ max-width:60ch; margin:44px auto 0; font-family:var(--editorial); font-size:clamp(18px,2.8vw,24px); line-height:1.5; color:var(--bone-dim); text-align:center; }
+  .team-text{ max-width:64ch; margin:0 auto; display:flex; flex-direction:column; gap:clamp(38px,6vh,66px); text-align:center; }
+  .team-text .vname{ font-family:var(--display); font-weight:700; font-size:clamp(22px,4.2vw,34px); letter-spacing:.02em; color:var(--bone); }
+  .team-text .credits{ font-family:var(--ui); font-size:clamp(12px,2vw,15px); letter-spacing:.04em; color:var(--bone-dim); margin:14px auto 0; max-width:54ch; line-height:1.6; }
+  .team-text .vbio{ font-family:var(--editorial); font-style:italic; font-size:clamp(18px,2.9vw,25px); line-height:1.44; color:var(--bone-dim); max-width:56ch; margin:14px auto 0; }
+
   @media (prefers-reduced-motion: reduce){
     body::after{ animation:none; }
     .kenburns .ph{ animation:none; }
@@ -241,25 +256,17 @@
 </head>
 <body>
 
-<!-- ==================== ACT I - THE STORY (image -> black text) ==================== -->
+<!-- ==================== ACT I - THE STORY (image -> bridging text below) ==================== -->
 <section class="panel img kenburns op-short">
   <div class="art"><div class="ph" data-img="assets/img/00-act1-lgw-logo.webp"></div></div>
 </section>
 <section class="panel card op-short">
   <div class="content">
-    <p class="ask rise">Go Ask Alyss</p>
+    <p class="ask rise">What if Wonderland Was Real All Along?</p>
   </div>
 </section>
 <section class="panel img kenburns">
   <div class="art"><div class="ph" data-img="assets/img/01-act1-wonderland-panorama.webp" data-img-wide="assets/img/01-act1-wonderland-panorama-wide.webp"><div class="cap"><span class="k">Art · Panorama</span><span class="t">Wondertropolis · Chessboard Desert · House of Cards</span></div></div></div>
-</section>
-<section class="panel card">
-  <div class="content">
-    <p class="ask rise">WHAT IF WONDERLAND WAS REAL ALL ALONG?</p>
-  </div>
-</section>
-<section class="panel img kenburns">
-  <div class="art"><div class="ph" data-img="assets/img/02-act1-aiw-cover.webp"><div class="cap"><span class="k">Art · Cover</span><span class="t">Alice&#39;s Adventures in Wonderland &mdash; original 1865 cover</span></div></div></div>
 </section>
 <section class="panel card">
   <div class="content wide">
@@ -268,7 +275,7 @@
   </div>
 </section>
 <section class="panel img kenburns">
-  <div class="art"><div class="ph" data-img="assets/img/03-act1-alyss-princess.webp"><div class="cap"><span class="k">Art · Kovacs / Appelhans</span><span class="t">Princess Alyss · Alyss&#39;s Birthday</span></div></div></div>
+  <div class="art"><div class="ph" data-img="assets/img/02-act1-aiw-cover.webp"><div class="cap"><span class="k">Art · Cover</span><span class="t">Alice&#39;s Adventures in Wonderland &mdash; original 1865 cover</span></div></div></div>
 </section>
 <section class="panel card">
   <div class="content">
@@ -277,7 +284,7 @@
   </div>
 </section>
 <section class="panel img kenburns">
-  <div class="art"><div class="ph" data-img="assets/img/04-act1-redd-bookcover.webp" data-img-wide="assets/img/04-act1-redd-bookcover-wide.webp"><div class="cap"><span class="k">Art · Vance Kovacs</span><span class="t">Redd &mdash; book cover</span></div></div></div>
+  <div class="art"><div class="ph" data-img="assets/img/03-act1-alyss-princess.webp"><div class="cap"><span class="k">Art · Kovacs / Appelhans</span><span class="t">Princess Alyss · Alyss&#39;s Birthday</span></div></div></div>
 </section>
 <section class="panel card">
   <div class="content">
@@ -286,7 +293,7 @@
   </div>
 </section>
 <section class="panel img kenburns">
-  <div class="art"><div class="ph" data-img="assets/img/05-act1-pool-of-tears.webp" data-img-wide="assets/img/05-act1-pool-of-tears-wide.webp"><div class="cap"><span class="k">Art · Brian Flora</span><span class="t">The Pool of Tears</span></div></div></div>
+  <div class="art"><div class="ph" data-img="assets/img/04-act1-redd-bookcover.webp" data-img-wide="assets/img/04-act1-redd-bookcover-wide.webp"><div class="cap"><span class="k">Art · Vance Kovacs</span><span class="t">Redd &mdash; book cover</span></div></div></div>
 </section>
 <section class="panel card">
   <div class="content wide">
@@ -295,7 +302,7 @@
   </div>
 </section>
 <section class="panel img kenburns">
-  <div class="art"><div class="ph" data-img="assets/img/06-act1-hatter-alyss-whirlpool.webp"><div class="cap"><span class="k">Art · Ben Templesmith</span><span class="t">Hatter &amp; Alyss in the Whirlpool</span></div></div></div>
+  <div class="art"><div class="ph" data-img="assets/img/05-act1-pool-of-tears.webp" data-img-wide="assets/img/05-act1-pool-of-tears-wide.webp"><div class="cap"><span class="k">Art · Brian Flora</span><span class="t">The Pool of Tears</span></div></div></div>
 </section>
 <section class="panel card">
   <div class="content">
@@ -305,7 +312,7 @@
   </div>
 </section>
 <section class="panel img kenburns">
-  <div class="art"><div class="ph" data-img="assets/img/07-act1-alyss-in-london.webp" data-img-wide="assets/img/07-act1-alyss-in-london-wide.webp"><div class="cap"><span class="k">Art · Toby Wilson</span><span class="t">Alyss in London</span></div></div></div>
+  <div class="art"><div class="ph" data-img="assets/img/06-act1-hatter-alyss-whirlpool.webp"><div class="cap"><span class="k">Art · Ben Templesmith</span><span class="t">Hatter &amp; Alyss in the Whirlpool</span></div></div></div>
 </section>
 <section class="panel card">
   <div class="content">
@@ -315,12 +322,12 @@
   </div>
 </section>
 <section class="panel img kenburns">
-  <div class="art"><div class="ph" data-img="assets/img/08-act1-carroll-reveal.webp" data-img-wide="assets/img/08-act1-carroll-reveal-wide.webp"><div class="cap"><span class="k">Art · Historical</span><span class="t">Lewis Carroll &amp; Alice Liddell</span></div></div></div>
+  <div class="art"><div class="ph" data-img="assets/img/07-act1-alyss-in-london.webp" data-img-wide="assets/img/07-act1-alyss-in-london-wide.webp"><div class="cap"><span class="k">Art · Toby Wilson</span><span class="t">Alyss in London</span></div></div></div>
 </section>
 <section class="panel card">
   <div class="content wide">
     <p class="line rise">Alone in Victorian England&hellip;</p>
-    <p class="line rise d1">Alyss told her story to Charles Dodgson.</p>
+    <p class="line rise d1">Alyss told her story to <b>Lewis Carroll.</b></p>
     <p class="line rise d1">He believed her grief.</p>
     <p class="line rise d2">He believed her fear.</p>
     <p class="line rise d2">He simply couldn&#39;t believe her world.</p>
@@ -330,12 +337,21 @@
   </div>
 </section>
 <section class="panel img kenburns">
-  <div class="art"><div class="ph" data-img="assets/img/09-act1-alice-vs-alyss.webp" data-img-wide="assets/img/09-act1-alice-vs-alyss-wide.webp"><div class="cap"><span class="k">Art · Comparison</span><span class="t">Tenniel&#39;s Alice vs Catia Chien&#39;s Alyss</span></div></div></div>
+  <div class="art"><div class="ph" data-img="assets/img/08-act1-carroll-reveal.webp" data-img-wide="assets/img/08-act1-carroll-reveal-wide.webp"><div class="cap"><span class="k">Art · Historical</span><span class="t">Lewis Carroll &amp; Alice Liddell</span></div></div></div>
 </section>
 <section class="panel card chapter">
   <div class="content">
     <p class="head-sm rise">PUT ASIDE WHAT YOU THINK YOU KNOW.</p>
     <p class="b rise d1">DISCOVER THE TRUTH</p>
+  </div>
+</section>
+<section class="panel img kenburns">
+  <div class="art"><div class="ph" data-img="assets/img/09-act1-alice-vs-alyss.webp" data-img-wide="assets/img/09-act1-alice-vs-alyss-wide.webp"><div class="cap"><span class="k">Art · Comparison</span><span class="t">Tenniel&#39;s Alice vs Catia Chien&#39;s Alyss</span></div></div></div>
+</section>
+<section class="panel card char">
+  <div class="content">
+    <p class="name rise">ALYSS HEART</p>
+    <p class="desc rise d1">She was born a princess.<br>She chose to become a queen.</p>
   </div>
 </section>
 
@@ -345,21 +361,12 @@
 </section>
 <section class="panel card char">
   <div class="content">
-    <p class="name rise d1">ALYSS HEART</p>
-    <p class="desc rise d2">She was born a princess.<br>She became a queen.</p>
-  </div>
-</section>
-<section class="panel img kenburns">
-  <div class="art"><div class="ph" data-img="assets/img/11-act2-hatter-on-smoke.webp" data-img-wide="assets/img/11-act2-hatter-on-smoke-wide.webp"><div class="cap"><span class="k">Art · MK</span><span class="t">Hatter on Smoke</span></div></div></div>
-</section>
-<section class="panel card char">
-  <div class="content">
     <p class="name rise">HATTER MADIGAN</p>
     <p class="desc rise d1">He crossed two worlds searching for someone who no longer remembered him.</p>
   </div>
 </section>
 <section class="panel img kenburns">
-  <div class="art"><div class="ph" data-img="assets/img/12-act2-redd.webp" data-img-wide="assets/img/12-act2-redd-wide.webp"><div class="cap"><span class="k">Art · Vance Kovacs</span><span class="t">Redd</span></div></div></div>
+  <div class="art"><div class="ph" data-img="assets/img/11-act2-hatter-on-smoke.webp" data-img-wide="assets/img/11-act2-hatter-on-smoke-wide.webp"><div class="cap"><span class="k">Art · MK</span><span class="t">Hatter on Smoke</span></div></div></div>
 </section>
 <section class="panel card char">
   <div class="content">
@@ -368,23 +375,35 @@
   </div>
 </section>
 <section class="panel img kenburns">
-  <div class="art"><div class="ph" data-img="assets/img/13-act2-the-cat.webp" data-img-wide="assets/img/13-act2-the-cat-wide.webp"><div class="cap"><span class="k">Art · Vance Kovacs</span><span class="t">The Attack Cat</span></div></div></div>
+  <div class="art"><div class="ph" data-img="assets/img/12-act2-redd.webp" data-img-wide="assets/img/12-act2-redd-wide.webp"><div class="cap"><span class="k">Art · Vance Kovacs</span><span class="t">Redd</span></div></div></div>
 </section>
 <section class="panel card char">
   <div class="content">
     <p class="name rise">THE CAT</p>
-    <p class="desc rise d1">He turned fear into a weapon &mdash; and became the nightmare no child ever forgets.</p>
-  </div>
-</section>
-<!-- ==================== ACT III - THE STORY THAT NEVER ENDED ==================== -->
-<section class="panel card">
-  <div class="content">
-    <p class="ask rise">EVERYTHING BEGAN HERE.</p>
+    <p class="desc rise d1">He began as a weapon. He became something more.</p>
   </div>
 </section>
 <section class="panel img kenburns">
+  <div class="art"><div class="ph" data-img="assets/img/13-act2-the-cat.webp" data-img-wide="assets/img/13-act2-the-cat-wide.webp"><div class="cap"><span class="k">Art · Vance Kovacs</span><span class="t">The Attack Cat</span></div></div></div>
+</section>
+<section class="panel card">
+  <div class="content">
+    <p class="ask rise">Alyss&#39;s Story Starts Here</p>
+  </div>
+</section>
+
+<!-- ==================== ACT III ==================== -->
+<section class="panel img kenburns">
   <div class="art"><div class="ph" data-img="assets/img/14-act3-lgw-cover.webp"><div class="cap"><span class="k">Cover</span><span class="t">The Looking Glass Wars</span></div></div></div>
 </section>
+
+<!-- Morpurgo quote -->
+<div class="band" style="padding:clamp(70px,13vh,150px) 0"><div class="inner">
+  <blockquote class="mquote rise">
+    <p>&ldquo;I think the remarkable thing about the book is it&#39;s very vibrant, it&#39;s imaginative, it&#39;s visual, it&#39;s very well researched. What Frank has done is he&#39;s interwoven the history&hellip; of Alice and then told his own extraordinary, and believably visual and fast-moving tale.&rdquo;</p>
+    <cite class="rise d1">&mdash; Sir Michael Morpurgo,<br>Author of <em>War Horse</em>, Children&#39;s Laureate</cite>
+  </blockquote>
+</div></div>
 
 <div class="stack-band">
   <!-- Authority: NYT Bestseller (designed white-on-black graphic) + press acclaim -->
@@ -441,7 +460,7 @@
   <!-- Media Interest (Frank Beddor Press Reel) -->
   <div class="band" style="padding-top:0"><div class="inner">
     <span class="eyebrow rise">Media Interest</span>
-    <div class="ytfacade rise d1" data-yt="_mW_imW4gqg" style="max-width:860px;margin:6px auto 0;aspect-ratio:16/9;background-image:url('assets/img/media-interest-thumb.webp')"><button class="ytplay" aria-label="Play - Frank Beddor Press Reel"></button></div>
+    <div class="ytfacade rise d1" data-yt="VfYlsYILhIY" style="max-width:860px;margin:6px auto 0;aspect-ratio:16/9;background-image:url('assets/img/media-interest-thumb.webp')"><button class="ytplay" aria-label="Play - Frank Beddor Press Reel"></button></div>
   </div></div>
 
   <!-- Closing -->
@@ -453,14 +472,31 @@
     <p class="final rise d3">IMAGINATION CHANGES REALITY.</p>
     <div class="creed rise" style="margin-top:38px">
       <p class="l">Every invention begins as an idea.</p>
-      <p class="l">Every civilization begins as a story.</p>
+      <p class="l">Every civilization has its story.</p>
       <p class="l">Whoever shapes imagination shapes the future.</p>
-      <p class="l strong">That&#39;s what&#39;s at stake in The Looking Glass Wars.</p>
+      <p class="l strong">That is the Looking Glass Wars.</p>
     </div>
-    <div class="ytfacade rise" data-yt="JhD3f9caS5o" style="max-width:760px;margin:clamp(150px,28vh,320px) auto 0;aspect-ratio:16/9;background-image:url('assets/img/wildcards-thumb.webp')"><button class="ytplay" aria-label="Play - Cards Wild Trailer"></button></div>
-    <div class="choices rise" style="margin-top:46px">
-      <a class="btn" href="visionaries.html">Visions of Wonderland</a>
+  </div></div>
+
+  <!-- The Sound of Wonder (moved from Visionaries) -->
+  <div class="band"><div class="inner">
+    <div class="seg"><div class="seg-head rise">The Sound of Wonder</div><div class="seg-sub rise d1">When the heart can no longer speak&hellip; it sings.</div></div>
+    <div class="center"><div class="ytfacade rise" data-yt="BaXb30RQfa8" style="max-width:340px;aspect-ratio:9/16;background-image:url('assets/img/viz-aow-thumb.webp')"><button class="ytplay" aria-label="Play - Follow the Glow"></button></div></div>
+    <p class="musical-copy rise">The Looking Glass Wars is an epic musical with a soaring pop-inspired score, breathtaking spectacle, and timeless themes of identity, love, courage, and imagination.</p>
+  </div></div>
+
+  <!-- Meet the Team (moved from Visionaries) -->
+  <div class="band" style="padding-top:0"><div class="inner">
+    <div class="center" style="margin-bottom:clamp(30px,5vh,60px)"><span class="eyebrow rise">Meet the Team</span></div>
+    <div class="team-text">
+      <div class="rise"><div class="vname">Music &amp; Lyrics &mdash; Pippa Cleary</div><p class="credits">The Great British Bake Off Musical &bull; The Secret Diary of Adrian Mole Aged 13&frac34; &ndash; The Musical &bull; My Son&#39;s a Queer (But What Can You Do?) (Olivier Award nominee)</p><p class="vbio">The first female composer to have three original musicals produced on London&#39;s West End.</p></div>
+      <div class="rise d1"><div class="vname">Book &amp; Lyrics &mdash; Shaun McKenna</div><p class="credits">The Lord of the Rings &ndash; A Musical Tale &bull; The Return of Peter Pan &bull; Heidi</p><p class="vbio">One of Britain&#39;s most accomplished musical dramatists, Shaun has built his career adapting beloved literary worlds.</p></div>
     </div>
+  </div></div>
+
+  <!-- final CTA -->
+  <div class="band" style="padding-top:0"><div class="inner">
+    <div class="choices rise"><a class="btn" href="visionaries.html">Visions of Wonderland</a></div>
   </div></div>
 </div>
 
