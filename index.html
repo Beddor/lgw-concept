@@ -106,6 +106,10 @@
   }
   .panel.card{ background:var(--void); }
   .panel.op-short{ min-height:56vh; min-height:56svh; }
+  /* halve the breathing room between the Cat image and this header.
+     Only the text panel shrinks — shortening the image panel would shrink the
+     artwork itself, since the art is height-constrained under background-size:contain. */
+  .panel.gap-half{ min-height:58vh; min-height:58svh; }
   .panel.img{ background:var(--void); }
   /* On Social */
   /* 6-rows-of-3 fan gallery */
@@ -201,6 +205,7 @@
   .closing{ text-align:center; }
   .closing .l{ font-family:var(--editorial); font-size:clamp(20px,4vw,32px); line-height:1.45; color:var(--bone-dim); }
   .closing .l.strong{ color:var(--bone); }
+  .closing .l.em-blue{ color:var(--glow); }
   .closing .final{ font-family:var(--display); font-weight:700; font-size:clamp(26px,6vw,54px); letter-spacing:.04em; color:var(--bone); margin-top:26px; text-shadow:0 0 60px rgba(143,215,255,.12); }
 
   /* first choices — the ONLY interactive moment */
@@ -258,11 +263,11 @@
 
 <!-- ==================== ACT I - THE STORY (image -> bridging text below) ==================== -->
 <section class="panel img kenburns op-short">
-  <div class="art"><div class="ph" data-img="assets/img/00-act1-lgw-logo.webp"></div></div>
+  <div class="art"><div class="ph" data-img="assets/img/00-act1-lgw-logo-musical.webp"></div></div>
 </section>
 <section class="panel card op-short">
   <div class="content">
-    <p class="ask rise">What if Wonderland Was Real All Along?</p>
+    <p class="line rise">What if Wonderland Was Real All Along?</p>
   </div>
 </section>
 <section class="panel img kenburns">
@@ -357,7 +362,7 @@
 
 <!-- ==================== ACT II - THE PEOPLE ==================== -->
 <section class="panel img kenburns">
-  <div class="art"><div class="ph" data-img="assets/img/10-act2-alyss-warrior.webp" data-img-wide="assets/img/10-act2-alyss-warrior-wide.webp"><div class="cap"><span class="k">Art · Vincent Proce</span><span class="t">Warrior Alyss</span></div></div></div>
+  <div class="art"><div class="ph" data-img="assets/img/10-act2-alyss-warrior.webp" data-img-wide="assets/img/10-act2-alyss-warrior-centered-wide.webp"><div class="cap"><span class="k">Art · Vincent Proce</span><span class="t">Warrior Alyss</span></div></div></div>
 </section>
 <section class="panel card char">
   <div class="content">
@@ -386,7 +391,7 @@
 <section class="panel img kenburns">
   <div class="art"><div class="ph" data-img="assets/img/13-act2-the-cat.webp" data-img-wide="assets/img/13-act2-the-cat-wide.webp"><div class="cap"><span class="k">Art · Vance Kovacs</span><span class="t">The Attack Cat</span></div></div></div>
 </section>
-<section class="panel card">
+<section class="panel card gap-half">
   <div class="content">
     <p class="ask rise">Alyss&#39;s Story Starts Here</p>
   </div>
@@ -400,8 +405,8 @@
 <!-- Morpurgo quote -->
 <div class="band" style="padding:clamp(70px,13vh,150px) 0"><div class="inner">
   <blockquote class="mquote rise">
-    <p>&ldquo;I think the remarkable thing about the book is it&#39;s very vibrant, it&#39;s imaginative, it&#39;s visual, it&#39;s very well researched. What Frank has done is he&#39;s interwoven the history&hellip; of Alice and then told his own extraordinary, and believably visual and fast-moving tale.&rdquo;</p>
-    <cite class="rise d1">&mdash; Sir Michael Morpurgo,<br>Author of <em>War Horse</em>, Children&#39;s Laureate</cite>
+    <p>&ldquo;I think the remarkable thing about the book is it&#39;s very vibrant, it&#39;s imaginative, it&#39;s very well researched. What Frank has done is he&#39;s interwoven the history&hellip; of Alice and then told his own extraordinary, and believably visual and fast-moving tale.&rdquo;</p>
+    <cite class="rise d1">&mdash; Sir Michael Morpurgo,<br>Author of <em>WAR HORSE</em>, Children&#39;s Laureate</cite>
   </blockquote>
 </div></div>
 
@@ -473,25 +478,9 @@
     <div class="creed rise" style="margin-top:38px">
       <p class="l">Every invention begins as an idea.</p>
       <p class="l">Every civilization has its story.</p>
-      <p class="l">Whoever shapes imagination shapes the future.</p>
-      <p class="l strong">That is the Looking Glass Wars.</p>
+      <p class="l em-blue">Whoever shapes imagination shapes the future.</p>
     </div>
-  </div></div>
-
-  <!-- The Sound of Wonder (moved from Visionaries) -->
-  <div class="band"><div class="inner">
-    <div class="seg"><div class="seg-head rise">The Sound of Wonder</div><div class="seg-sub rise d1">When the heart can no longer speak&hellip; it sings.</div></div>
-    <div class="center"><div class="ytfacade rise" data-yt="BaXb30RQfa8" style="max-width:340px;aspect-ratio:9/16;background-image:url('assets/img/viz-aow-thumb.webp')"><button class="ytplay" aria-label="Play - Follow the Glow"></button></div></div>
-    <p class="musical-copy rise">The Looking Glass Wars is an epic musical with a soaring pop-inspired score, breathtaking spectacle, and timeless themes of identity, love, courage, and imagination.</p>
-  </div></div>
-
-  <!-- Meet the Team (moved from Visionaries) -->
-  <div class="band" style="padding-top:0"><div class="inner">
-    <div class="center" style="margin-bottom:clamp(30px,5vh,60px)"><span class="eyebrow rise">Meet the Team</span></div>
-    <div class="team-text">
-      <div class="rise"><div class="vname">Music &amp; Lyrics &mdash; Pippa Cleary</div><p class="credits">The Great British Bake Off Musical &bull; The Secret Diary of Adrian Mole Aged 13&frac34; &ndash; The Musical &bull; My Son&#39;s a Queer (But What Can You Do?) (Olivier Award nominee)</p><p class="vbio">The first female composer to have three original musicals produced on London&#39;s West End.</p></div>
-      <div class="rise d1"><div class="vname">Book &amp; Lyrics &mdash; Shaun McKenna</div><p class="credits">The Lord of the Rings &ndash; A Musical Tale &bull; The Return of Peter Pan &bull; Heidi</p><p class="vbio">One of Britain&#39;s most accomplished musical dramatists, Shaun has built his career adapting beloved literary worlds.</p></div>
-    </div>
+    <div class="choices rise d1"><a class="btn" href="soundofwonder.html">The Sound of Wonder</a></div>
   </div></div>
 
   <!-- final CTA -->
