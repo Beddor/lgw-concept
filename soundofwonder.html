@@ -119,10 +119,192 @@
   </div>
 </section>
 
-<footer>
-  <div class="fm">The Looking Glass Wars</div>
-  <div style="margin-top:12px"><a href="index.html">&larr; Return to the story</a></div>
+
+
+
+
+
+<!-- ===== GLOBAL FOOTER (shared across all pages) ===== -->
+<style>
+  footer.sitefooter{
+    position:relative; z-index:20; background:var(--void,#08070a);
+    border-top:1px solid var(--rule-soft,rgba(244,240,234,.07));
+    padding:clamp(56px,9vh,96px) var(--pad,clamp(24px,7vw,90px)) calc(env(safe-area-inset-bottom) + 56px);
+    text-align:center;
+  }
+  footer.sitefooter .ft-inner{ max-width:760px; margin:0 auto; }
+  footer.sitefooter .ft-mark{
+    font-family:var(--display,'Cinzel',serif); font-weight:600; font-size:12px;
+    letter-spacing:.34em; text-transform:uppercase; color:var(--bone-dim,#b9b2a8);
+  }
+  /* the inner pages style bare `nav` as a fixed top bar — reset that here */
+  footer.sitefooter .ft-nav{
+    position:static; top:auto; left:auto; right:auto; z-index:auto; background:none;
+    display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
+    gap:10px 0; margin-top:26px; padding:0;
+  }
+  footer.sitefooter .ft-nav a{
+    font-family:var(--ui,'Inter',sans-serif); font-size:10px; font-weight:400; letter-spacing:.24em;
+    text-transform:uppercase; color:var(--ash,#7d7684); text-decoration:none;
+    padding:0 14px; border-left:1px solid var(--rule-soft,rgba(244,240,234,.07));
+    transition:color .3s ease;
+  }
+  footer.sitefooter .ft-nav a:first-child{ border-left:none; }
+  footer.sitefooter .ft-nav a:hover{ color:var(--glow,#8fd7ff); }
+  footer.sitefooter .ft-nav a[aria-current="page"]{ color:var(--bone-dim,#b9b2a8); }
+
+  footer.sitefooter .ft-contact{
+    margin-top:34px; font-family:var(--editorial,'Cormorant Garamond',serif);
+    font-size:clamp(17px,2.6vw,21px); color:var(--bone,#f4f0ea);
+  }
+  footer.sitefooter .ft-contact a{ color:var(--glow,#8fd7ff); text-decoration:none; border-bottom:1px solid rgba(143,215,255,.3); padding-bottom:2px; }
+  footer.sitefooter .ft-contact a:hover{ border-bottom-color:var(--glow,#8fd7ff); }
+
+  footer.sitefooter .ft-form{ margin-top:34px; text-align:left; }
+  footer.sitefooter .ft-row{ display:grid; grid-template-columns:1fr; gap:14px; margin-bottom:14px; }
+  @media(min-width:640px){ footer.sitefooter .ft-row{ grid-template-columns:1fr 1fr; } }
+  footer.sitefooter .ft-field{ display:block; margin-bottom:14px; }
+  footer.sitefooter .ft-row .ft-field{ margin-bottom:0; }
+  footer.sitefooter .ft-field > span{
+    display:block; font-family:var(--ui,'Inter',sans-serif); font-size:9.5px; font-weight:500;
+    letter-spacing:.28em; text-transform:uppercase; color:var(--ash,#7d7684); margin-bottom:9px;
+  }
+  footer.sitefooter input[type=email],
+  footer.sitefooter input[type=text],
+  footer.sitefooter textarea{
+    width:100%; display:block; font-family:var(--ui,'Inter',sans-serif); font-size:15px; font-weight:300;
+    color:var(--bone,#f4f0ea); background:var(--void-2,#0f0d13);
+    border:1px solid var(--rule,rgba(244,240,234,.14)); border-radius:0;
+    padding:14px 16px; transition:border-color .3s ease, box-shadow .3s ease;
+    -webkit-appearance:none; appearance:none;
+  }
+  footer.sitefooter textarea{ resize:vertical; min-height:120px; line-height:1.55; }
+  footer.sitefooter input::placeholder, footer.sitefooter textarea::placeholder{ color:rgba(125,118,132,.75); }
+  footer.sitefooter input:focus, footer.sitefooter textarea:focus{
+    outline:none; border-color:var(--glow,#8fd7ff); box-shadow:0 0 30px rgba(143,215,255,.12);
+  }
+  footer.sitefooter .ft-hp{ position:absolute; left:-9999px; opacity:0; height:0; width:0; }
+  footer.sitefooter .ft-actions{ margin-top:22px; text-align:center; }
+  footer.sitefooter .ft-send{
+    font-family:var(--ui,'Inter',sans-serif); font-size:12px; font-weight:500; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--void,#08070a); background:var(--glow,#8fd7ff);
+    border:1px solid var(--glow,#8fd7ff); border-radius:0; padding:16px 40px; cursor:pointer;
+    transition:all .35s ease;
+  }
+  footer.sitefooter .ft-send:hover{ background:transparent; color:var(--glow,#8fd7ff); box-shadow:0 0 40px rgba(143,215,255,.2); }
+  footer.sitefooter .ft-send[disabled]{ opacity:.5; cursor:default; box-shadow:none; }
+  footer.sitefooter .ft-status{
+    min-height:1.4em; margin-top:16px; text-align:center;
+    font-family:var(--ui,'Inter',sans-serif); font-size:12px; letter-spacing:.06em; color:var(--bone-dim,#b9b2a8);
+  }
+  footer.sitefooter .ft-status.ok{ color:var(--glow,#8fd7ff); }
+  footer.sitefooter .ft-status.err{ color:#ff2d4b; }
+  footer.sitefooter .ft-fine{
+    margin-top:40px; font-family:var(--ui,'Inter',sans-serif); font-size:10px;
+    letter-spacing:.22em; text-transform:uppercase; color:var(--ash,#7d7684); opacity:.7;
+  }
+  footer.sitefooter a:focus-visible, footer.sitefooter button:focus-visible{ outline:2px solid var(--glow,#8fd7ff); outline-offset:4px; }
+</style>
+<footer class="sitefooter">
+  <div class="ft-inner">
+    <div class="ft-mark">The Looking Glass Wars</div>
+
+    <nav class="ft-nav" aria-label="Site">
+      <a href="index.html">The Story</a>
+      <a href="soundofwonder.html" aria-current="page">The Sound of Wonder</a>
+      <a href="visionaries.html">Visionaries</a>
+      <a href="library.html">The Library</a>
+      <a href="millinery.html">The Millinery</a>
+      <a href="explore.html">Explore Wonderland</a>
+      <a href="partners.html">For Partners</a>
+    </nav>
+
+    <p class="ft-contact">Contact <a href="mailto:info@lookingglasswars.com">info@lookingglasswars.com</a></p>
+
+    <form class="ft-form" id="lgwContact" novalidate>
+      <div class="ft-row">
+        <label class="ft-field"><span>Your email</span>
+          <input type="email" name="email" required autocomplete="email" placeholder="you@example.com"></label>
+        <label class="ft-field"><span>Message title</span>
+          <input type="text" name="subject" required placeholder="What is this about?"></label>
+      </div>
+      <label class="ft-field"><span>Message</span>
+        <textarea name="message" rows="5" required placeholder="Tell us what you have in mind."></textarea></label>
+      <input class="ft-hp" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="ft-actions"><button type="submit" class="ft-send">Send Message</button></div>
+      <p class="ft-status" role="status" aria-live="polite"></p>
+    </form>
+
+    <p class="ft-fine">&copy; 2026 The Looking Glass Wars</p>
+  </div>
 </footer>
+
+<script>
+/* ---- Footer contact form ------------------------------------------------
+   Delivery via Web3Forms -> info@lookingglasswars.com.
+   Paste the access key from web3forms.com below. Until a real key is set the
+   form gracefully falls back to opening the visitor's mail client, so it is
+   never broken in production.
+------------------------------------------------------------------------- */
+(function(){
+  var WEB3FORMS_ACCESS_KEY = 'REPLACE_WITH_WEB3FORMS_ACCESS_KEY';
+  var TO = 'info@lookingglasswars.com';
+
+  var form = document.getElementById('lgwContact');
+  if(!form) return;
+  var status = form.querySelector('.ft-status');
+  var send   = form.querySelector('.ft-send');
+
+  function say(msg, kind){ status.textContent = msg; status.className = 'ft-status' + (kind ? ' ' + kind : ''); }
+
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var email   = form.email.value.trim();
+    var subject = form.subject.value.trim();
+    var message = form.message.value.trim();
+
+    if(!email || !subject || !message){ say('Please fill in all three fields.', 'err'); return; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ say('That email address does not look right.', 'err'); return; }
+    if(form.botcheck.checked) return;
+
+    /* No key configured yet -> hand off to the visitor's mail client. */
+    if(WEB3FORMS_ACCESS_KEY.indexOf('REPLACE_') === 0){
+      window.location.href = 'mailto:' + TO
+        + '?subject=' + encodeURIComponent(subject)
+        + '&body='    + encodeURIComponent(message + '\n\n\u2014 ' + email);
+      say('Opening your mail app\u2026');
+      return;
+    }
+
+    send.disabled = true;
+    say('Sending\u2026');
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_ACCESS_KEY,
+        email: email,
+        subject: subject,
+        message: message,
+        from_name: 'thelookingglasswars.com',
+        botcheck: ''
+      })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if(d && d.success){ form.reset(); say('Thank you \u2014 your message is on its way.', 'ok'); }
+      else { say('Something went wrong. Please email ' + TO + ' directly.', 'err'); }
+    })
+    .catch(function(){ say('Something went wrong. Please email ' + TO + ' directly.', 'err'); })
+    .finally(function(){ send.disabled = false; });
+  });
+})();
+</script>
+
+
+
+
+
 
 <script>
 (function(){
