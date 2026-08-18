@@ -39,6 +39,7 @@
   .visionary{ display:grid; grid-template-columns:1fr; gap:24px; align-items:center; padding:clamp(38px,6vh,72px) 0; border-top:1px solid var(--rule-soft); }
   .visionary:first-of-type{ border-top:none; }
   @media(min-width:820px){ .visionary{ grid-template-columns:.85fr 1.15fr; gap:clamp(40px,6vw,80px); } .visionary:nth-child(even) .vimg{ order:2; } }
+  @media(min-width:820px){ .visionary.noimg{ grid-template-columns:1fr; } }
   .vimg img{ width:100%; height:auto; display:block; border:1px solid var(--rule); background:var(--void-2); }
   .vname{ font-family:var(--display); font-weight:700; font-size:clamp(22px,4vw,34px); line-height:1.1; letter-spacing:.02em; color:var(--bone); }
   .tagline{ font-family:var(--ui); font-size:11px; font-weight:600; letter-spacing:.26em; text-transform:uppercase; color:var(--glow); margin-top:14px; }
@@ -143,8 +144,7 @@
       <div class="vimg rise"><img src="assets/img/lib-jetseer.webp" alt="Jet Seer" loading="lazy"></div>
       <div class="vtext rise d1"><div class="vname">Jet Seer</div><p class="tagline">A New Hero Enters the Wonderverse</p><p class="vbio">Jet Seer steps into the spotlight in her own time-spanning saga.</p></div>
     </div>
-    <div class="visionary">
-      <div class="vimg rise"><img src="assets/img/lib-sujiumei.webp" alt="Su Jiumei" loading="lazy"></div>
+    <div class="visionary noimg">
       <div class="vtext rise d1"><div class="vname">Su Jiumei</div><p class="tagline">The Pirate</p><p class="vbio">Hatter Madigan finds an unexpected ally in the fearless pirate Su Jiumei, whose story history erased.</p></div>
     </div>
     <div class="visionary">
