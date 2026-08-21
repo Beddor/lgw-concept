@@ -1,23 +1,13 @@
 {
   "cleanUrls": false,
   "rewrites": [
-    {
-      "source": "/",
-      "destination": "/index.html"
-    }
+    { "source": "/", "destination": "/index.html" }
   ],
   "headers": [
     {
       "source": "**/*.js",
       "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=300"
-        },
-        {
-          "key": "X-Cache-Debug",
-          "value": "from-serve-json"
-        }
+        { "key": "Cache-Control", "value": "public, max-age=300" }
       ]
     }
   ]
