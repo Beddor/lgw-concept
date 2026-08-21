@@ -13,7 +13,7 @@
    Consent Mode still applies at the tag, so nothing is stored pre-consent.
 
    Events pushed:
-     inquiry_click · inquiry_type, link_url, link_text, page_name
+     inquiry_click · inquiry_type, page_name
      video_play    · video_title, video_id, video_provider, page_name
    ========================================================================== */
 (function () {
@@ -28,13 +28,16 @@
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a[href^="mailto:"]');
     if (!a) return;
+    // Neither the address nor the link text is sent. Every mailto here
+    // points at the same company mailbox, and the footer links use the
+    // address itself as their label -- so both fields would put an email
+    // string in analytics while adding no signal that inquiry_type does
+    // not already carry.
     var href = a.getAttribute('href') || '';
     dl.push({
       event: 'inquiry_click',
       // the franchise CTA carries a ?subject=; the footer address does not
       inquiry_type: href.indexOf('subject=') > -1 ? 'franchise' : 'general',
-      link_url: href.split('?')[0].replace(/^mailto:/, ''),
-      link_text: (a.textContent || '').trim().slice(0, 100),
       page_name: pageName
     });
   }, true);
