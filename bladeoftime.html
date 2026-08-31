@@ -21,10 +21,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-W3QTX3VS');</script>
 <!-- End Google Tag Manager -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>House of Cards — The Looking Glass Wars</title>
-<meta name="description" content="Every hand is dealt from here. The House of Cards is the seat of Wonderland's government.">
-<meta property="og:title" content="House of Cards — The Looking Glass Wars">
-<meta property="og:description" content="Every hand is dealt from here.">
+<title>Blade of Time — The Looking Glass Wars</title>
+<meta name="description" content="When memory becomes a weapon. The Dormouse's consciousness no longer belongs to one timeline.">
+<meta property="og:title" content="Blade of Time — The Looking Glass Wars">
+<meta property="og:description" content="When memory becomes a weapon.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,15 +63,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
   .hero{ min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:calc(env(safe-area-inset-top) + 92px) var(--pad) clamp(36px,6vh,70px); gap:clamp(20px,3.6vh,34px); }
 
-  /* video facade */
-  .ytfacade{ position:relative; background:#000 center/cover no-repeat; border:1px solid var(--rule); cursor:pointer; overflow:hidden; margin:0 auto; }
-  .ytfacade::before{ content:''; position:absolute; inset:0; background:rgba(6,5,9,.22); transition:background .3s ease; }
-  .ytfacade:hover::before{ background:rgba(6,5,9,.08); }
-  .ytplay{ position:absolute; z-index:2; top:50%; left:50%; transform:translate(-50%,-50%); width:76px; height:76px; border-radius:50%; border:1px solid var(--glow); background:radial-gradient(circle, rgba(143,215,255,.20), rgba(6,5,9,.55) 72%); box-shadow:0 0 40px rgba(143,215,255,.18); cursor:pointer; padding:0; }
-  .ytplay::after{ content:''; position:absolute; top:50%; left:56%; transform:translate(-50%,-50%); width:0;height:0; border-left:20px solid var(--glow); border-top:12px solid transparent; border-bottom:12px solid transparent; }
-  .ytfacade iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; z-index:3; }
-  /* sized off viewport height so the trailer never runs past the fold */
-  .hero .ytfacade{ height:clamp(200px,52svh,506px); aspect-ratio:16/9; width:auto; max-width:min(900px,92vw); }
+  .keyart{ margin:0 auto; }
+  .keyart img{ width:100%; height:auto; display:block; border:1px solid var(--rule); }
+  /* the key art is square — size it off viewport height so the hero fits above the fold */
+  .hero .keyart{ height:clamp(180px,44svh,440px); aspect-ratio:1/1; width:auto; max-width:min(520px,84vw); }
+  .hero .keyart img{ height:100%; object-fit:cover; }
 
   .flavor{ max-width:46ch; margin:0 auto; font-family:var(--editorial); font-style:italic; font-size:clamp(19px,3.2vw,27px); line-height:1.45; color:var(--bone); text-align:center; }
 
@@ -102,15 +98,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- HERO -->
 <section class="hero">
-  <h1 class="title rise">House of Cards</h1>
-  <p class="subtitle rise d1">Every hand is dealt from here.</p>
-  <div class="ytfacade rise d2" data-yt="Fctxm-lXpCk" style="background-image:url('assets/img/viz-hoc-thumb.webp')"><button class="ytplay" aria-label="Play - House of Cards trailer"></button></div>
+  <h1 class="title rise">Blade of Time</h1>
+  <p class="subtitle rise d1">When memory becomes a weapon&hellip;</p>
+  <div class="keyart rise d2"><img src="assets/img/viz-dormouse.webp" alt="The Dormouse — Blade of Time graphic novel"></div>
 </section>
 
 <!-- FLAVOR -->
 <section class="band" style="padding-top:0">
   <div class="wrap">
-    <p class="flavor rise">The House of Cards is the seat of Wonderland&#39;s government, where strategy, invention, and power determine the fate of a civilization.</p>
+    <p class="flavor rise">The Dormouse&#39;s consciousness no longer belongs to one timeline. As Hatter Madigan is pulled between past and present&hellip; every decision threatens to rewrite history.</p>
   </div>
 </section>
 
@@ -162,12 +158,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <nav class="ft-nav" aria-label="Site">
       <a href="index.html">The Story</a>
-      <a href="houseofcards.html" aria-current="page">House of Cards Game</a>
+      <a href="houseofcards.html">House of Cards Game</a>
       <a href="soundofwonder.html">The Sound of Wonder</a>
       <a href="visionaries.html">Visionaries</a>
       <a href="library.html">The Library</a>
       <a href="millinery.html">The Millinery</a>
-      <a href="bladeoftime.html">Blade of Time Graphic Novel</a>
+      <a href="bladeoftime.html" aria-current="page">Blade of Time Graphic Novel</a>
       <a href="explore.html">Explore Wonderland</a>
     </nav>
 
@@ -186,17 +182,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });},{threshold:0.16, rootMargin:'0px 0px -8% 0px'});
     rises.forEach(function(e){ io.observe(e); });
   }
-  document.querySelectorAll('.ytfacade').forEach(function(f){
-    f.addEventListener('click', function(){
-      if(f.dataset.loaded) return; var id=f.getAttribute('data-yt'); if(!id) return;
-      f.dataset.loaded='1';
-      var ifr=document.createElement('iframe');
-      ifr.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1&enablejsapi=1&origin='+encodeURIComponent(location.origin);
-      ifr.setAttribute('allow','autoplay; encrypted-media; picture-in-picture; fullscreen');
-      ifr.setAttribute('allowfullscreen','');
-      f.innerHTML=''; f.appendChild(ifr);
-    });
-  });
 })();
 </script>
 <script src="assets/js/consent.js" defer></script>
