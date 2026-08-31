@@ -173,6 +173,48 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="vimg rise"><img src="assets/img/lib-realm.webp" alt="Realm" loading="lazy"></div>
       <div class="vtext rise d1"><div class="vname">Realm</div><p class="tagline">Realm &amp; the White Flower Tribe</p><p class="vbio">The White Flower Tribe protects one of Wonderland&#39;s oldest secrets: White Luminescence&mdash;a rare form of imagination that heals instead of destroys.</p></div>
     </div>
+
+    <!-- ===== BUTTON DIRECTORY (shared segment across pages) =====
+         Six destinations: an icon image above a button. Three rows of two from
+         720px up, one column of six below. Self-contained — carries its own
+         styling and uses plain <img>, so it needs nothing from the host page. -->
+    <style>
+      .btn-dir{
+        display:grid; grid-template-columns:1fr;
+        gap:clamp(26px,4vw,44px) clamp(16px,3vw,32px);
+        max-width:340px; margin:clamp(56px,9vh,96px) auto 0;
+      }
+      @media(min-width:720px){ .btn-dir{ grid-template-columns:repeat(2,1fr); max-width:600px; } }
+      .btn-dir .dir{ display:flex; flex-direction:column; align-items:center; gap:16px; text-decoration:none; height:100%; }
+      .btn-dir .dir-ic{
+        display:block; width:clamp(80px,16.25vw,115px); height:auto; aspect-ratio:1/1;
+        object-fit:contain; transition:transform .35s ease;
+      }
+      .btn-dir .dir:hover .dir-ic{ transform:translateY(-3px); }
+      /* The label carries the site's button look in full rather than inheriting each
+         page's own .btn — library.html has no .btn rule, and the pages that do differ
+         slightly from one another. Stating it here keeps the segment identical everywhere.
+         flex:1 + stretched grid items keep both buttons in a row the same height,
+         so a label that wraps to two lines never sits taller than its neighbour. */
+      .btn-dir .dir .btn{
+        width:80%; flex:1; display:flex; align-items:center; justify-content:center;
+        text-align:center; padding:15px 18px; text-decoration:none; cursor:pointer;
+        font-family:var(--ui,'Inter',sans-serif); font-size:11px; font-weight:500;
+        letter-spacing:.18em; text-transform:uppercase;
+        color:var(--void,#08070a); background:var(--glow,#8fd7ff);
+        border:1px solid var(--glow,#8fd7ff); transition:all .35s ease;
+      }
+      .btn-dir .dir:hover .btn{ background:transparent; color:var(--glow,#8fd7ff); box-shadow:0 0 40px rgba(143,215,255,.2); }
+    </style>
+    <div class="btn-dir rise d1">
+      <a class="dir" href="visionaries.html"><img class="dir-ic" src="assets/img/icon-art-book.webp" alt="" width="256" height="256" loading="lazy"><span class="btn">Art Book</span></a>
+      <a class="dir" href="bladeoftime.html"><img class="dir-ic" src="assets/img/icon-graphic-novel.webp" alt="" width="256" height="256" loading="lazy"><span class="btn">Graphic Novel</span></a>
+      <a class="dir" href="soundofwonder.html"><img class="dir-ic" src="assets/img/icon-musical.webp" alt="" width="256" height="256" loading="lazy"><span class="btn">Musical</span></a>
+      <a class="dir" href="houseofcards.html"><img class="dir-ic" src="assets/img/icon-game.webp" alt="" width="256" height="256" loading="lazy"><span class="btn">Game</span></a>
+      <a class="dir" href="millinery.html"><img class="dir-ic" src="assets/img/icon-millinery.webp" alt="" width="256" height="256" loading="lazy"><span class="btn">The Millinery</span></a>
+      <a class="dir" href="library.html"><img class="dir-ic" src="assets/img/icon-library.webp" alt="" width="256" height="256" loading="lazy"><span class="btn">Library</span></a>
+    </div>
+    <!-- ===== END BUTTON DIRECTORY ===== -->
   </div>
 </section>
 
