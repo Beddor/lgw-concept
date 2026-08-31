@@ -61,13 +61,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   h1.title{ font-family:var(--display); font-weight:900; font-size:clamp(32px,7.5vw,74px); line-height:1.02; letter-spacing:.03em; text-align:center; text-wrap:balance; text-shadow:0 0 60px rgba(143,215,255,.10); }
   .subtitle{ font-family:var(--editorial); font-style:italic; font-size:clamp(19px,3.4vw,28px); color:var(--glow); text-align:center; letter-spacing:.02em; }
 
-  .hero{ min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:calc(env(safe-area-inset-top) + 92px) var(--pad) clamp(36px,6vh,70px); gap:clamp(20px,3.6vh,34px); }
+  .hero{ min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:calc(env(safe-area-inset-top) + 92px) var(--pad) clamp(8px,1.2vh,16px); gap:clamp(20px,3.6vh,34px); }
 
-  .keyart{ margin:0 auto; }
+  /* the cover is portrait — size it off viewport height so the hero fits above the fold.
+     max-height caps it two ways: the art is 2:3, so 126vw of height is 84vw of width, and
+     100svh minus the title/subtitle stack keeps short screens from overflowing the hero. */
+  .hero .cover{ margin:0 auto; }
+  .hero .cover img{
+    height:clamp(250px,57.5svh,575px); max-height:min(126vw, calc(100svh - 320px));
+    width:auto; display:block; border:1px solid var(--rule);
+  }
+
+  /* the key art sits under the flavor line — square, and narrower than the text column */
+  .keyart{ max-width:min(440px,84vw); margin:clamp(34px,6vh,60px) auto 0; }
   .keyart img{ width:100%; height:auto; display:block; border:1px solid var(--rule); }
-  /* the key art is square — size it off viewport height so the hero fits above the fold */
-  .hero .keyart{ height:clamp(180px,44svh,440px); aspect-ratio:1/1; width:auto; max-width:min(520px,84vw); }
-  .hero .keyart img{ height:100%; object-fit:cover; }
 
   .flavor{ max-width:46ch; margin:0 auto; font-family:var(--editorial); font-style:italic; font-size:clamp(19px,3.2vw,27px); line-height:1.45; color:var(--bone); text-align:center; }
 
@@ -100,13 +107,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="hero">
   <h1 class="title rise">Blade of Time</h1>
   <p class="subtitle rise d1">When memory becomes a weapon&hellip;</p>
-  <div class="keyart rise d2"><img src="assets/img/viz-dormouse.webp" alt="The Dormouse — Blade of Time graphic novel"></div>
+  <div class="cover rise d2"><img src="assets/img/viz-bot-cover.jpg" alt="Blade of Time — cover"></div>
 </section>
 
 <!-- FLAVOR -->
 <section class="band" style="padding-top:0">
   <div class="wrap">
     <p class="flavor rise">The Dormouse&#39;s consciousness no longer belongs to one timeline. As Hatter Madigan is pulled between past and present&hellip; every decision threatens to rewrite history.</p>
+
+    <div class="keyart rise d1"><img src="assets/img/viz-dormouse.webp" alt="The Dormouse — Blade of Time graphic novel"></div>
 
     <!-- ===== BUTTON DIRECTORY (shared segment across pages) =====
          Six destinations: an icon image above a button. Three rows of two from
