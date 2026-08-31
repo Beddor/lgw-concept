@@ -71,7 +71,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .ytplay::after{ content:''; position:absolute; top:50%; left:56%; transform:translate(-50%,-50%); width:0;height:0; border-left:20px solid var(--glow); border-top:12px solid transparent; border-bottom:12px solid transparent; }
   .ytfacade iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; z-index:3; }
   /* sized off viewport height so the trailer never runs past the fold */
-  .hero .ytfacade{ height:clamp(200px,52svh,506px); aspect-ratio:16/9; width:auto; max-width:min(900px,92vw); }
+  /* width drives the box so aspect-ratio always holds — a separate height would
+     let max-width squeeze the frame portrait and crop the 16:9 art */
+  .hero .ytfacade{ width:min(900px, 100%, calc(52svh * 16 / 9)); aspect-ratio:16/9; }
 
   .flavor{ max-width:46ch; margin:0 auto; font-family:var(--editorial); font-style:italic; font-size:clamp(19px,3.2vw,27px); line-height:1.45; color:var(--bone); text-align:center; }
 
