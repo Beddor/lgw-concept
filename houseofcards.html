@@ -21,10 +21,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-W3QTX3VS');</script>
 <!-- End Google Tag Manager -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>The Sound of Wonder — The Looking Glass Wars</title>
-<meta name="description" content="When the heart can no longer speak… it sings. The Looking Glass Wars musical.">
-<meta property="og:title" content="The Sound of Wonder — The Looking Glass Wars">
-<meta property="og:description" content="When the heart can no longer speak… it sings.">
+<title>House of Cards — The Looking Glass Wars</title>
+<meta name="description" content="Every hand is dealt from here. The House of Cards is the seat of Wonderland's government.">
+<meta property="og:title" content="House of Cards — The Looking Glass Wars">
+<meta property="og:description" content="Every hand is dealt from here.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,9 +58,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .band{ padding:clamp(60px,10vh,130px) 0; }
   .center{ text-align:center; }
 
-  .eyebrow{ font-family:var(--ui); font-size:11px; font-weight:500; letter-spacing:.36em; text-transform:uppercase; color:var(--glow); display:inline-flex; align-items:center; gap:12px; }
-  .eyebrow::before,.eyebrow::after{ content:''; width:26px; height:1px; background:var(--glow); opacity:.5; }
-
   h1.title{ font-family:var(--display); font-weight:900; font-size:clamp(32px,7.5vw,74px); line-height:1.02; letter-spacing:.03em; text-align:center; text-wrap:balance; text-shadow:0 0 60px rgba(143,215,255,.10); }
   .subtitle{ font-family:var(--editorial); font-style:italic; font-size:clamp(19px,3.4vw,28px); color:var(--glow); text-align:center; letter-spacing:.02em; }
 
@@ -73,16 +70,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .ytplay{ position:absolute; z-index:2; top:50%; left:50%; transform:translate(-50%,-50%); width:76px; height:76px; border-radius:50%; border:1px solid var(--glow); background:radial-gradient(circle, rgba(143,215,255,.20), rgba(6,5,9,.55) 72%); box-shadow:0 0 40px rgba(143,215,255,.18); cursor:pointer; padding:0; }
   .ytplay::after{ content:''; position:absolute; top:50%; left:56%; transform:translate(-50%,-50%); width:0;height:0; border-left:20px solid var(--glow); border-top:12px solid transparent; border-bottom:12px solid transparent; }
   .ytfacade iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; z-index:3; }
-  /* vertical short — sized off viewport height so it never runs past the fold */
-  .ytfacade.short{ height:min(46svh,560px); aspect-ratio:9/16; width:auto; max-width:84vw; }
+  /* sized off viewport height so the trailer never runs past the fold */
+  .hero .ytfacade{ height:clamp(200px,52svh,506px); aspect-ratio:16/9; width:auto; max-width:min(900px,92vw); }
 
-  .musical-copy{ max-width:56ch; margin:0 auto; font-family:var(--editorial); font-size:clamp(19px,3vw,26px); line-height:1.5; color:var(--bone-dim); text-align:center; }
-
-  /* Meet the Team (text only) */
-  .team-text{ max-width:64ch; margin:0 auto; display:flex; flex-direction:column; gap:clamp(38px,6vh,66px); text-align:center; }
-  .team-text .vname{ font-family:var(--display); font-weight:700; font-size:clamp(22px,4.2vw,34px); letter-spacing:.02em; color:var(--bone); }
-  .credits{ font-family:var(--ui); font-size:clamp(12px,2vw,15px); font-weight:400; letter-spacing:.04em; color:var(--bone-dim); margin:14px auto 0; max-width:54ch; line-height:1.6; }
-  .vbio{ font-family:var(--editorial); font-style:italic; font-weight:300; font-size:clamp(18px,2.9vw,25px); line-height:1.44; color:var(--bone-dim); max-width:56ch; margin:14px auto 0; }
+  .flavor{ max-width:46ch; margin:0 auto; font-family:var(--editorial); font-style:italic; font-size:clamp(19px,3.2vw,27px); line-height:1.45; color:var(--bone); text-align:center; }
 
   .btn{ display:inline-flex; align-items:center; gap:12px; font-family:var(--ui); font-size:12px; font-weight:500; letter-spacing:.24em; text-transform:uppercase; color:var(--void); background:var(--glow); border:1px solid var(--glow); padding:18px 44px; cursor:pointer; text-decoration:none; transition:all .35s ease; }
   .btn:hover{ background:transparent; color:var(--glow); box-shadow:0 0 40px rgba(143,215,255,.2); }
@@ -106,44 +97,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <nav>
   <a class="wm" href="index.html">The Looking Glass Wars</a>
-  <a class="back" href="index.html">&larr; Back</a>
+  <a class="back" href="visionaries.html">&larr; Back</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <h1 class="title rise">THE SOUND<br>OF WONDER</h1>
-  <p class="subtitle rise d1">When the heart can no longer speak&hellip; it sings.</p>
-  <div class="ytfacade short rise d2" data-yt="RZEaqOfKPb4" style="background-image:url('assets/img/sow-jamie-thumb.webp')"><button class="ytplay" aria-label="Play - Jamie sings Follow the Glow"></button></div>
+  <h1 class="title rise">House of Cards</h1>
+  <p class="subtitle rise d1">Every hand is dealt from here.</p>
+  <div class="ytfacade rise d2" data-yt="Fctxm-lXpCk" style="background-image:url('assets/img/viz-hoc-thumb.webp')"><button class="ytplay" aria-label="Play - House of Cards trailer"></button></div>
 </section>
 
-<!-- THE MUSICAL -->
+<!-- FLAVOR -->
 <section class="band" style="padding-top:0">
   <div class="wrap">
-    <p class="musical-copy rise">At its heart, the musical is Alyss&#39;s journey to reclaim her identity in a world determined to define it for her&mdash;a sweeping story of belonging, first love, and the courage to decide for herself what is real.</p>
+    <p class="flavor rise">The House of Cards is the seat of Wonderland&#39;s government, where strategy, invention, and power determine the fate of a civilization.</p>
   </div>
 </section>
-
-<!-- MEET THE TEAM -->
-<section class="band" style="background:var(--void-2)">
-  <div class="wrap">
-    <div class="center" style="margin-bottom:clamp(30px,5vh,60px)"><span class="eyebrow rise">Meet the Team</span></div>
-    <div class="team-text">
-      <div class="rise"><div class="vname">Music &amp; Lyrics &mdash; Pippa Cleary</div><p class="credits">The Great British Bake Off Musical &bull; The Secret Diary of Adrian Mole Aged 13&frac34; &ndash; The Musical &bull; My Son&#39;s a Queer (But What Can You Do?) (Olivier Award nominee)</p><p class="vbio">The first female composer to have three original musicals produced on London&#39;s West End.</p></div>
-      <div class="rise d1"><div class="vname">Book &amp; Lyrics &mdash; Shaun McKenna</div><p class="credits">The Lord of the Rings &ndash; A Musical Tale &bull; The Return of Peter Pan &bull; Heidi</p><p class="vbio">One of Britain&#39;s most accomplished musical dramatists, Shaun has built his career adapting beloved literary worlds.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="band">
-  <div class="wrap center">
-    <div class="rise"><a class="btn" href="visionaries.html">Visions of Wonderland</a></div>
-  </div>
-</section>
-
-
-
-
 
 <!-- ===== GLOBAL FOOTER (shared across all pages) ===== -->
 <style>
@@ -193,8 +162,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <nav class="ft-nav" aria-label="Site">
       <a href="index.html">The Story</a>
-      <a href="houseofcards.html">House of Cards Game</a>
-      <a href="soundofwonder.html" aria-current="page">The Sound of Wonder</a>
+      <a href="houseofcards.html" aria-current="page">House of Cards Game</a>
+      <a href="soundofwonder.html">The Sound of Wonder</a>
       <a href="visionaries.html">Visionaries</a>
       <a href="library.html">The Library</a>
       <a href="millinery.html">The Millinery</a>
@@ -206,11 +175,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p class="ft-fine">&copy; 2026 The Looking Glass Wars</p>
   </div>
 </footer>
-
-
-
-
-
 
 <script>
 (function(){
