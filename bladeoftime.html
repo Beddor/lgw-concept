@@ -72,6 +72,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     width:auto; display:block; border:1px solid var(--rule);
   }
 
+  /* MOBILE: the cover runs 1.5x the desktop sizing, capped at 94vw of width — a phone
+     screen is the real ceiling here, so the wider the cover gets the sooner it binds. */
+  @media (max-width:719px){
+    .hero{ padding-bottom:clamp(16px,3vh,26px); }
+    .hero .cover img{ height:clamp(375px,86.25svh,862px); max-height:min(141vw, calc(150svh - 480px)); }
+  }
+
   /* the key art sits under the flavor line — square, and narrower than the text column */
   .keyart{ max-width:min(440px,84vw); margin:clamp(34px,6vh,60px) auto 0; }
   .keyart img{ width:100%; height:auto; display:block; border:1px solid var(--rule); }
