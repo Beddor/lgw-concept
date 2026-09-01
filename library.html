@@ -58,6 +58,113 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .visionary:first-of-type{ border-top:none; }
   @media(min-width:820px){ .visionary{ grid-template-columns:.85fr 1.15fr; gap:clamp(40px,6vw,80px); } .visionary:nth-child(even) .vimg{ order:2; } }
   @media(min-width:820px){ .visionary.noimg{ grid-template-columns:1fr; } }
+  /* ===== BOOK LIGHTBOX — the Underfire cover opens a page-turning reader =====
+     The leaf mechanic matches the Blade of Time gallery: a single leaf rotates about
+     its left edge, its front face the page you were on and its back face the page you
+     are going to, with the destination already sitting underneath. */
+  .bl-trigger{ display:block; width:100%; padding:0; border:0; background:none; cursor:pointer; position:relative; }
+  .bl-trigger:focus-visible{ outline:2px solid var(--glow); outline-offset:4px; }
+  .bl-cue{
+    position:absolute; left:0; right:0; bottom:0; padding:26px 10px 13px;
+    font-family:var(--ui); font-size:11px; font-weight:600; letter-spacing:.26em; text-transform:uppercase;
+    color:var(--bone); background:linear-gradient(0deg, rgba(8,7,10,.9), transparent);
+    opacity:0; transition:opacity .35s ease; pointer-events:none;
+  }
+  .bl-trigger:hover .bl-cue, .bl-trigger:focus-visible .bl-cue{ opacity:1; }
+
+  .bl-overlay{
+    position:fixed; inset:0; z-index:200; display:none;
+    background:rgba(4,4,6,.95);
+    padding:calc(env(safe-area-inset-top) + 56px) 14px calc(env(safe-area-inset-bottom) + 14px);
+    flex-direction:column; align-items:center; justify-content:center; gap:clamp(14px,2.6vh,24px);
+  }
+  .bl-overlay.open{ display:flex; }
+  body.bl-locked{ overflow:hidden; }
+
+  .bl-close{
+    position:absolute; top:calc(env(safe-area-inset-top) + 14px); right:14px;
+    width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center;
+    font-family:var(--ui); font-size:19px; line-height:1; cursor:pointer;
+    color:var(--glow); background:transparent; border:1px solid var(--glow);
+    transition:background .3s ease, color .3s ease;
+  }
+  .bl-close:hover{ background:var(--glow); color:var(--void); }
+
+  /* width is capped by the viewport AND by what fits the viewport height at this ratio */
+  .bl-stage{
+    position:relative; width:min(92vw, calc(74svh * 477 / 733));
+    aspect-ratio:477/733; perspective:1900px; cursor:pointer; user-select:none;
+  }
+  .bl-stage img{ width:100%; height:100%; object-fit:contain; display:block; background:#fff; }
+  .bl-base{ position:absolute; inset:0; border:1px solid var(--rule); }
+  .bl-leaf{ position:absolute; inset:0; display:none; transform-origin:left center; transform-style:preserve-3d; }
+  .bl-face{ position:absolute; inset:0; backface-visibility:hidden; border:1px solid var(--rule); overflow:hidden; }
+  .bl-back{ transform:rotateY(180deg); }
+  .bl-face::after{
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(90deg, rgba(0,0,0,.5), rgba(0,0,0,0) 26%);
+  }
+  .bl-back::after{ background:linear-gradient(270deg, rgba(0,0,0,.5), rgba(0,0,0,0) 26%); }
+  .bl-leaf.fwd-from{ display:block; transform:rotateY(0deg); opacity:1; }
+  .bl-leaf.fwd-to{
+    display:block; transform:rotateY(-172deg); opacity:0;
+    transition:transform .92s cubic-bezier(.34,.05,.24,1), opacity .3s ease .52s;
+  }
+  .bl-leaf.back-from{ display:block; transform:rotateY(-172deg); opacity:0; }
+  .bl-leaf.back-to{
+    display:block; transform:rotateY(0deg); opacity:1;
+    transition:transform .92s cubic-bezier(.34,.05,.24,1), opacity .3s ease;
+  }
+
+  .bl-bar{ display:flex; align-items:center; justify-content:center; gap:clamp(18px,4vw,32px); }
+  .bl-btn{
+    width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center;
+    font-family:var(--ui); font-size:15px; line-height:1; cursor:pointer;
+    color:var(--glow); background:transparent; border:1px solid var(--glow);
+    transition:background .3s ease, color .3s ease, opacity .3s ease;
+  }
+  .bl-btn:hover:not(:disabled){ background:var(--glow); color:var(--void); }
+  .bl-btn:disabled{ opacity:.28; cursor:default; border-color:var(--ash); color:var(--ash); }
+  .bl-count{
+    font-family:var(--ui); font-size:11px; letter-spacing:.24em; text-transform:uppercase;
+    color:var(--bone-dim); min-width:82px; text-align:center;
+  }
+  /* windowed page strip: 1 … 11 12 [13] 14 15 … 80 — every number is clickable */
+  .bl-pages{
+    display:flex; align-items:center; justify-content:center; gap:4px; flex-wrap:nowrap;
+    max-width:min(74vw,520px); overflow:hidden;
+  }
+  .bl-num{
+    min-width:30px; height:30px; padding:0 6px; cursor:pointer;
+    font-family:var(--ui); font-size:12px; letter-spacing:.06em; line-height:1;
+    color:var(--bone-dim); background:transparent; border:1px solid transparent;
+    transition:color .25s ease, border-color .25s ease, background .25s ease;
+  }
+  .bl-num:hover{ color:var(--glow); border-color:var(--rule); }
+  .bl-num[aria-current="true"]{ color:var(--void); background:var(--glow); border-color:var(--glow); font-weight:600; }
+  .bl-gap{ color:var(--ash); font-family:var(--ui); font-size:12px; padding:0 2px; user-select:none; }
+
+  .bl-jump{ display:flex; align-items:center; justify-content:center; gap:9px; }
+  .bl-jump label, .bl-jump .bl-of{
+    font-family:var(--ui); font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--ash);
+  }
+  .bl-jump input{
+    width:64px; height:32px; text-align:center; -moz-appearance:textfield;
+    font-family:var(--ui); font-size:13px; color:var(--bone);
+    background:transparent; border:1px solid var(--rule); border-radius:0;
+  }
+  .bl-jump input::-webkit-outer-spin-button, .bl-jump input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+  .bl-jump input:focus{ outline:none; border-color:var(--glow); }
+  .bl-go{
+    height:32px; padding:0 14px; cursor:pointer;
+    font-family:var(--ui); font-size:11px; font-weight:600; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--glow); background:transparent; border:1px solid var(--glow);
+    transition:background .3s ease, color .3s ease;
+  }
+  .bl-go:hover{ background:var(--glow); color:var(--void); }
+  .bl-jump input:focus-visible, .bl-go:focus-visible, .bl-num:focus-visible{ outline:2px solid var(--glow); outline-offset:3px; }
+  .bl-stage:focus-visible, .bl-btn:focus-visible, .bl-close:focus-visible{ outline:2px solid var(--glow); outline-offset:4px; }
+  @media (prefers-reduced-motion: reduce){ .bl-leaf{ display:none !important; } }
   .visionary.noimg .vtext{ text-align:center; }
   .visionary.noimg .vbio{ margin-left:auto; margin-right:auto; }
   .vimg img{ width:100%; height:auto; display:block; border:1px solid var(--rule); background:var(--void-2); }
@@ -141,7 +248,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="vtext rise d1"><div class="vname">The Looking Glass Wars: Crossfire</div><p class="tagline">Rogue Hero</p><p class="vbio">Crossfire expands LGW beyond the throne, and introduces a new hero, <b>Ovid Grey.</b></p></div>
     </div>
     <div class="visionary">
-      <div class="vimg rise"><img src="assets/img/lib-underfire.webp" alt="The Looking Glass Wars: Underfire" loading="lazy"></div>
+      <div class="vimg rise"><button class="bl-trigger" id="blOpen" type="button" aria-haspopup="dialog"><img src="assets/img/lib-underfire.webp" alt="The Looking Glass Wars: Underfire" loading="lazy"><span class="bl-cue">Read the book</span></button></div>
       <div class="vtext rise d1"><div class="vname">The Looking Glass Wars: Underfire</div><p class="tagline">Every Story Expands the World</p><p class="vbio">UnderFire reveals the water nation of Unterlan.</p></div>
     </div>
     <div class="visionary">
@@ -180,6 +287,163 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 
+
+<!-- ===== BOOK LIGHTBOX ===== -->
+<div class="bl-overlay" id="blOverlay" role="dialog" aria-modal="true" aria-label="The Looking Glass Wars: Underfire — page reader" hidden>
+  <button class="bl-close" id="blClose" type="button" aria-label="Close reader">&times;</button>
+
+  <div class="bl-stage" id="blStage" tabindex="0" role="group" aria-label="Book pages, use the arrow keys to turn">
+    <img class="bl-base" id="blBase" src="" alt="">
+    <div class="bl-leaf" id="blLeaf" aria-hidden="true">
+      <div class="bl-face bl-front"><img id="blFront" src="" alt=""></div>
+      <div class="bl-face bl-back"><img id="blBack" src="" alt=""></div>
+    </div>
+  </div>
+
+  <div class="bl-bar">
+    <button class="bl-btn" id="blPrev" type="button" aria-label="Previous page" disabled>&larr;</button>
+    <div class="bl-pages" id="blPages" role="group" aria-label="Go to page"></div>
+    <button class="bl-btn" id="blNext" type="button" aria-label="Next page">&rarr;</button>
+  </div>
+
+  <form class="bl-jump" id="blJump">
+    <label for="blJumpInput">Page</label>
+    <input id="blJumpInput" type="number" min="1" step="1" inputmode="numeric" aria-label="Jump to page number">
+    <span class="bl-of" id="blOf"></span>
+    <button class="bl-go" type="submit">Go</button>
+  </form>
+</div>
+
+<script>
+(function(){
+  var TOTAL = 80, DIR = 'assets/img/underfire/';
+  var PAGES = [];
+  for (var n = 1; n <= TOTAL; n++) PAGES.push(DIR + 'uf-' + ('00' + n).slice(-3) + '.jpg');
+
+  var trigger = document.getElementById('blOpen'), ov = document.getElementById('blOverlay');
+  if (!trigger || !ov) return;
+  var stage = document.getElementById('blStage'), base = document.getElementById('blBase'),
+      leaf  = document.getElementById('blLeaf'),  front = document.getElementById('blFront'),
+      back  = document.getElementById('blBack'),  prev  = document.getElementById('blPrev'),
+      next  = document.getElementById('blNext'),  strip = document.getElementById('blPages'),
+      form  = document.getElementById('blJump'),  input = document.getElementById('blJumpInput'),
+      ofLbl = document.getElementById('blOf'),    closeBtn = document.getElementById('blClose');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var i = 0, busy = false, timer = null, lastFocus = null;
+
+  input.max = TOTAL; ofLbl.textContent = 'of ' + TOTAL;
+
+  function preload(n){ if (PAGES[n]) { var im = new Image(); im.src = PAGES[n]; } }
+
+  /* 1 … 11 12 [13] 14 15 … 80 — first, last, and a window around the current page */
+  function buildStrip(){
+    var want = {}, w = 1;
+    want[1] = 1; want[TOTAL] = 1;
+    for (var d = -w; d <= w; d++){ var n = i + 1 + d; if (n >= 1 && n <= TOTAL) want[n] = 1; }
+    var list = Object.keys(want).map(Number).sort(function(a,b){ return a - b; });
+    strip.textContent = '';
+    list.forEach(function(n, idx){
+      if (idx && n - list[idx-1] > 1){
+        var gap = document.createElement('span');
+        gap.className = 'bl-gap'; gap.textContent = '…'; gap.setAttribute('aria-hidden','true');
+        strip.appendChild(gap);
+      }
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'bl-num'; b.textContent = n;
+      b.setAttribute('aria-label', 'Page ' + n);
+      if (n === i + 1) b.setAttribute('aria-current','true');
+      b.addEventListener('click', function(){ goTo(n - 1); });
+      strip.appendChild(b);
+    });
+  }
+
+  function paint(){
+    base.src = PAGES[i];
+    base.alt = 'Underfire page ' + (i + 1) + ' of ' + TOTAL;
+    prev.disabled = (i === 0); next.disabled = (i === TOTAL - 1);
+    if (document.activeElement !== input) input.value = i + 1;
+    buildStrip(); preload(i + 1); preload(i - 1);
+  }
+  function settle(n){ clearTimeout(timer); leaf.className = 'bl-leaf'; i = n; busy = false; paint(); }
+
+  /* adjacent turns animate; a jump of more than one page lands directly */
+  function goTo(n){
+    if (busy || n < 0 || n >= TOTAL || n === i) return;
+    if (Math.abs(n - i) === 1) { turn(n - i); return; }
+    settle(n);
+  }
+  function turn(dir){
+    var n = i + dir;
+    if (busy || n < 0 || n >= TOTAL) return;
+    if (reduce){ settle(n); return; }
+    busy = true;
+    front.src = PAGES[dir > 0 ? i : n];
+    back.src  = PAGES[dir > 0 ? n : i];
+    base.src  = PAGES[n];
+    leaf.className = 'bl-leaf ' + (dir > 0 ? 'fwd-from' : 'back-from');
+    void leaf.offsetWidth;                                  /* commit the start state */
+    leaf.className = 'bl-leaf ' + (dir > 0 ? 'fwd-to' : 'back-to');
+    timer = setTimeout(function(){ settle(n); }, 1100);      /* transitionend never fires on a hidden tab */
+  }
+  leaf.addEventListener('transitionend', function(e){
+    if (e.propertyName === 'transform' && busy) settle(i + (leaf.classList.contains('fwd-to') ? 1 : -1));
+  });
+
+  function open(){
+    lastFocus = document.activeElement;
+    ov.hidden = false; ov.classList.add('open');
+    document.body.classList.add('bl-locked');
+    paint(); stage.focus();
+  }
+  function close(){
+    ov.classList.remove('open'); ov.hidden = true;
+    document.body.classList.remove('bl-locked');
+    if (lastFocus) lastFocus.focus();
+  }
+
+  trigger.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+  ov.addEventListener('mousedown', function(e){ if (e.target === ov) close(); });
+
+  next.addEventListener('click', function(){ turn(1); });
+  prev.addEventListener('click', function(){ turn(-1); });
+  stage.addEventListener('click', function(e){
+    turn(e.clientX - stage.getBoundingClientRect().left < stage.offsetWidth / 3 ? -1 : 1);
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var n = parseInt(input.value, 10);
+    if (!isNaN(n)) goTo(Math.min(Math.max(n, 1), TOTAL) - 1);
+    input.blur();
+  });
+
+  ov.addEventListener('keydown', function(e){
+    if (e.key === 'Escape'){ e.preventDefault(); close(); return; }
+    var typing = e.target === input;
+    if (!typing && (e.key === 'ArrowRight' || e.key === ' ')){ e.preventDefault(); turn(1); }
+    else if (!typing && e.key === 'ArrowLeft'){ e.preventDefault(); turn(-1); }
+    else if (!typing && e.key === 'Home'){ e.preventDefault(); goTo(0); }
+    else if (!typing && e.key === 'End'){ e.preventDefault(); goTo(TOTAL - 1); }
+    else if (e.key === 'Tab'){                                /* keep focus inside the dialog */
+      var f = ov.querySelectorAll('button, input, [tabindex="0"]');
+      f = Array.prototype.filter.call(f, function(el){ return !el.disabled && el.offsetParent !== null; });
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+  });
+
+  var x0 = null;
+  stage.addEventListener('touchstart', function(e){ x0 = e.changedTouches[0].clientX; }, {passive:true});
+  stage.addEventListener('touchend', function(e){
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 40) turn(dx < 0 ? 1 : -1);
+  }, {passive:true});
+})();
+</script>
 
 <!-- ===== GLOBAL FOOTER (shared across all pages) ===== -->
 <style>
