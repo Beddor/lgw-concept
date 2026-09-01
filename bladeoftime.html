@@ -148,6 +148,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   footer.sitefooter .ft-nav a:hover{ color:var(--glow,#8fd7ff); }
   footer.sitefooter .ft-nav a[aria-current="page"]{ color:var(--bone-dim,#b9b2a8); }
 
+  /* mobile: stack the link tree one page per row */
+  @media (max-width:719px){
+    footer.sitefooter .ft-nav{ flex-direction:column; flex-wrap:nowrap; gap:14px 0; }
+    footer.sitefooter .ft-nav a{ padding:0; border-left:none; }
+  }
+
   footer.sitefooter .ft-contact{
     margin-top:34px; font-family:var(--editorial,'Cormorant Garamond',serif);
     font-size:clamp(17px,2.6vw,21px); color:var(--bone,#f4f0ea);
