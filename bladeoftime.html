@@ -126,6 +126,152 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
+<!-- ===== PAGE FLIP GALLERY =====
+     Four interior pages, turned one at a time. The turn is a single leaf rotating
+     about its left edge: its front face is the page you were on, its back face is
+     the page you are going to, and the destination is already sitting underneath,
+     so when the leaf fades out past the halfway point the page below is exactly
+     what the reader expects. Self-contained — carries its own styling and script. -->
+<style>
+  .flipbook-band{ padding-top:0; overflow:hidden; }
+  .flipbook-band .eyebrow{
+    font-family:var(--ui,'Inter',sans-serif); font-size:11px; font-weight:500; letter-spacing:.36em;
+    text-transform:uppercase; color:var(--glow,#8fd7ff); display:inline-flex; align-items:center; gap:12px;
+  }
+  .flipbook-band .eyebrow::before,.flipbook-band .eyebrow::after{ content:''; width:26px; height:1px; background:var(--glow,#8fd7ff); opacity:.5; }
+
+  .fb-stage{
+    position:relative; width:min(430px,86vw); aspect-ratio:2/3; margin:0 auto;
+    perspective:1900px; cursor:pointer; user-select:none;
+  }
+  .fb-stage img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .fb-base{ position:absolute; inset:0; border:1px solid var(--rule,rgba(244,240,234,.12)); }
+
+  /* the turning leaf sits on top of the destination page until the turn is done */
+  .fb-leaf{ position:absolute; inset:0; display:none; transform-origin:left center; transform-style:preserve-3d; }
+  .fb-face{ position:absolute; inset:0; backface-visibility:hidden; border:1px solid var(--rule,rgba(244,240,234,.12)); overflow:hidden; }
+  .fb-back{ transform:rotateY(180deg); }
+  /* a gutter shadow along the spine edge of each face, so the leaf reads as paper */
+  .fb-face::after{
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(90deg, rgba(0,0,0,.5), rgba(0,0,0,0) 26%);
+  }
+  .fb-back::after{ background:linear-gradient(270deg, rgba(0,0,0,.5), rgba(0,0,0,0) 26%); }
+
+  .fb-leaf.fwd-from{ display:block; transform:rotateY(0deg); opacity:1; }
+  .fb-leaf.fwd-to{
+    display:block; transform:rotateY(-172deg); opacity:0;
+    transition:transform .92s cubic-bezier(.34,.05,.24,1), opacity .3s ease .52s;
+  }
+  .fb-leaf.back-from{ display:block; transform:rotateY(-172deg); opacity:0; }
+  .fb-leaf.back-to{
+    display:block; transform:rotateY(0deg); opacity:1;
+    transition:transform .92s cubic-bezier(.34,.05,.24,1), opacity .3s ease;
+  }
+
+  .fb-bar{ display:flex; align-items:center; justify-content:center; gap:clamp(20px,4vw,34px); margin-top:clamp(24px,4vh,38px); }
+  .fb-btn{
+    width:46px; height:46px; display:inline-flex; align-items:center; justify-content:center;
+    font-family:var(--ui,'Inter',sans-serif); font-size:15px; line-height:1; cursor:pointer;
+    color:var(--glow,#8fd7ff); background:transparent; border:1px solid var(--glow,#8fd7ff);
+    transition:background .3s ease, color .3s ease, opacity .3s ease;
+  }
+  .fb-btn:hover:not(:disabled){ background:var(--glow,#8fd7ff); color:var(--void,#08070a); }
+  .fb-btn:disabled{ opacity:.28; cursor:default; border-color:var(--ash,#7d7684); color:var(--ash,#7d7684); }
+  .fb-count{
+    font-family:var(--ui,'Inter',sans-serif); font-size:11px; letter-spacing:.24em;
+    text-transform:uppercase; color:var(--bone-dim,#b9b2a8); min-width:74px; text-align:center;
+  }
+  .fb-stage:focus-visible, .fb-btn:focus-visible{ outline:2px solid var(--glow,#8fd7ff); outline-offset:4px; }
+
+  @media (prefers-reduced-motion: reduce){
+    .fb-leaf{ display:none !important; }
+  }
+</style>
+
+<section class="band flipbook-band">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:clamp(26px,4.5vh,52px)"><span class="eyebrow rise">Inside the Book</span></div>
+
+    <div class="flipbook rise d1">
+      <div class="fb-stage" id="fbStage" tabindex="0" role="group" aria-label="Interior pages, use the arrow keys to turn">
+        <img class="fb-base" id="fbBase" src="assets/img/viz-bot-pg11.jpg" alt="Blade of Time interior page 1 of 4">
+        <div class="fb-leaf" id="fbLeaf" aria-hidden="true">
+          <div class="fb-face fb-front"><img id="fbFront" src="" alt=""></div>
+          <div class="fb-face fb-back"><img id="fbBack" src="" alt=""></div>
+        </div>
+      </div>
+
+      <div class="fb-bar">
+        <button class="fb-btn" id="fbPrev" type="button" aria-label="Previous page" disabled>&larr;</button>
+        <span class="fb-count" id="fbCount" aria-live="polite">01 / 04</span>
+        <button class="fb-btn" id="fbNext" type="button" aria-label="Next page">&rarr;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var PAGES=['assets/img/viz-bot-pg11.jpg','assets/img/viz-bot-pg12.jpg','assets/img/viz-bot-pg13.jpg','assets/img/viz-bot-pg14.jpg'];
+  var stage=document.getElementById('fbStage'); if(!stage) return;
+  var base=document.getElementById('fbBase'), leaf=document.getElementById('fbLeaf'),
+      front=document.getElementById('fbFront'), back=document.getElementById('fbBack'),
+      prev=document.getElementById('fbPrev'), next=document.getElementById('fbNext'),
+      count=document.getElementById('fbCount');
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var i=0, busy=false, timer=null;
+
+  function pad(n){ return (n<10?'0':'')+n; }
+  function preload(n){ if(PAGES[n]){ var im=new Image(); im.src=PAGES[n]; } }
+  function paint(){
+    base.src=PAGES[i];
+    base.alt='Blade of Time interior page '+(i+1)+' of '+PAGES.length;
+    count.textContent=pad(i+1)+' / '+pad(PAGES.length);
+    prev.disabled=(i===0); next.disabled=(i===PAGES.length-1);
+    preload(i+1); preload(i-1);
+  }
+  function settle(n){
+    clearTimeout(timer);
+    leaf.className='fb-leaf'; i=n; busy=false; paint();
+  }
+  function turn(dir){
+    var n=i+dir;
+    if(busy||n<0||n>=PAGES.length) return;
+    if(reduce){ settle(n); return; }
+    busy=true;
+    front.src=PAGES[dir>0?i:n];
+    back.src=PAGES[dir>0?n:i];
+    base.src=PAGES[n];
+    leaf.className='fb-leaf '+(dir>0?'fwd-from':'back-from');
+    void leaf.offsetWidth;                       /* commit the start state before transitioning */
+    leaf.className='fb-leaf '+(dir>0?'fwd-to':'back-to');
+    timer=setTimeout(function(){ settle(n); },1100);   /* transitionend never fires on a hidden tab */
+  }
+  leaf.addEventListener('transitionend',function(e){ if(e.propertyName==='transform'&&busy) settle(i+(leaf.classList.contains('fwd-to')?1:-1)); });
+
+  next.addEventListener('click',function(){ turn(1); });
+  prev.addEventListener('click',function(){ turn(-1); });
+  stage.addEventListener('click',function(e){
+    turn(e.clientX-stage.getBoundingClientRect().left < stage.offsetWidth/3 ? -1 : 1);
+  });
+  stage.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key===' '){ e.preventDefault(); turn(1); }
+    else if(e.key==='ArrowLeft'){ e.preventDefault(); turn(-1); }
+  });
+
+  var x0=null;
+  stage.addEventListener('touchstart',function(e){ x0=e.changedTouches[0].clientX; },{passive:true});
+  stage.addEventListener('touchend',function(e){
+    if(x0===null) return;
+    var dx=e.changedTouches[0].clientX-x0; x0=null;
+    if(Math.abs(dx)>40) turn(dx<0?1:-1);
+  },{passive:true});
+
+  paint();
+})();
+</script>
+
 <!-- ===== GLOBAL FOOTER (shared across all pages) ===== -->
 <style>
   footer.sitefooter{
