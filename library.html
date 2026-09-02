@@ -393,7 +393,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     lastFocus = document.activeElement;
     ov.hidden = false; ov.classList.add('open');
     document.body.classList.add('bl-locked');
-    paint(); stage.focus();
+    settle(0);                 /* every visit starts at page one, and any half-finished turn is cleared */
+    stage.focus();
   }
   function close(){
     ov.classList.remove('open'); ov.hidden = true;
