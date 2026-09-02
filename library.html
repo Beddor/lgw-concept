@@ -81,6 +81,138 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   footer a{ color:var(--glow); text-decoration:none; }
   a:focus-visible{ outline:2px solid var(--glow); outline-offset:4px; }
   @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} body::after{animation:none} .rise{opacity:1!important;transform:none!important;transition:none} }
+
+  /* ===== LORE SCROLL — a subtle cue under a place opens a scrolling lore dialog ===== */
+  .lore-cue{
+    display:inline-flex; align-items:center; gap:14px; margin-top:30px;
+    padding:0; background:none; border:0; cursor:pointer; -webkit-tap-highlight-color:transparent;
+    font-family:var(--ui); font-size:11px; font-weight:400; letter-spacing:.26em;
+    text-transform:uppercase; color:var(--ash); transition:color .45s ease;
+  }
+  .lore-cue .lc-rule{ display:block; width:28px; height:1px; background:var(--rule); transition:width .45s ease, background .45s ease; }
+  .lore-cue:hover, .lore-cue:focus-visible{ color:var(--glow); }
+  .lore-cue:hover .lc-rule, .lore-cue:focus-visible .lc-rule{ width:52px; background:var(--glow); }
+  .lore-cue:focus-visible{ outline:2px solid var(--glow); outline-offset:6px; }
+
+  .lore-ov{
+    position:fixed; inset:0; z-index:200; overflow-y:auto; overscroll-behavior:contain;
+    background:var(--void);   /* solid, so the page dissolves into the scroll rather than ghosting through */
+    opacity:0; visibility:hidden; transition:opacity .5s ease, visibility 0s linear .5s;
+  }
+  .lore-ov.open{ opacity:1; visibility:visible; transition:opacity .5s ease, visibility 0s; }
+  body.lore-locked{ overflow:hidden; }
+
+  /* hairline reading-progress bar across the very top of the dialog */
+  .lore-prog{ position:fixed; top:0; left:0; height:1px; width:0; background:var(--glow); opacity:.75; z-index:3; transition:width .12s linear; }
+
+  .lore-close{
+    position:fixed; top:calc(env(safe-area-inset-top) + 14px); right:14px; z-index:3;
+    width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center;
+    font-family:var(--ui); font-size:19px; line-height:1; cursor:pointer;
+    color:var(--glow); background:rgba(5,4,7,.7); border:1px solid var(--glow);
+    transition:background .3s ease, color .3s ease;
+  }
+  .lore-close:hover{ background:var(--glow); color:var(--void); }
+
+  .lore-doc{
+    max-width:640px; margin:0 auto;
+    padding:calc(env(safe-area-inset-top) + clamp(80px,12vh,130px)) var(--pad) calc(env(safe-area-inset-bottom) + clamp(70px,12vh,120px));
+    transform:translateY(18px); transition:transform .75s cubic-bezier(.2,.7,.2,1);
+  }
+  .lore-ov.open .lore-doc{ transform:none; }
+
+  .lore-kicker{ text-align:center; font-family:var(--ui); font-size:11px; font-weight:500; letter-spacing:.3em; text-transform:uppercase; color:var(--glow); }
+  .lore-title{ text-align:center; font-family:var(--display); font-weight:900; font-size:clamp(30px,6.4vw,52px); line-height:1.04; letter-spacing:.03em; color:var(--bone); margin-top:16px; text-wrap:balance; }
+  /* .lore-doc p below is more specific, so the lede is qualified to keep its own size and color */
+  .lore-doc .lore-lede{ text-align:center; font-family:var(--editorial); font-style:italic; font-weight:300; font-size:clamp(19px,3vw,26px); line-height:1.4; color:var(--bone); margin-top:20px; }
+  .lore-doc .lore-lede + .lore-lede{ margin-top:.75em; }
+  /* the two turns under the opening line drop back in size and take the glow */
+  .lore-doc .lore-lede.sub{ font-size:clamp(17px,2.4vw,21px); color:var(--glow); }
+  .lore-rule{ height:1px; background:var(--rule-soft); margin:clamp(32px,5vh,48px) 0; }
+
+  .lore-doc p{ font-family:var(--editorial); font-weight:300; font-size:clamp(18px,2.6vw,22px); line-height:1.55; color:var(--bone-dim); }
+  .lore-doc p + p{ margin-top:1.1em; }
+  .lore-h{
+    font-family:var(--display); font-weight:600; font-size:clamp(13px,2vw,15px); letter-spacing:.22em;
+    text-transform:uppercase; color:var(--bone); margin-top:clamp(40px,6vh,64px);
+    padding-top:22px; border-top:1px solid var(--rule-soft);
+  }
+  .lore-h + p{ margin-top:18px; }
+
+
+  /* the cadence lines — each fragment steps a little further in */
+  .lore-cadence{ margin:clamp(34px,5vh,52px) 0; }
+  .lore-doc .lore-cadence p{
+    font-family:var(--editorial); font-style:italic; font-weight:300;
+    font-size:clamp(19px,2.9vw,25px); line-height:1.34; color:var(--bone);
+  }
+  .lore-doc .lore-cadence p + p{ margin-top:.4em; }
+  @media(min-width:700px){
+    .lore-cadence:not(.flush) p:nth-child(2){ padding-left:22px; }
+    .lore-cadence:not(.flush) p:nth-child(3){ padding-left:44px; }
+    .lore-cadence:not(.flush) p:nth-child(4){ padding-left:66px; }
+  }
+  /* .flush keeps lines too long to indent on one left edge */
+  .lore-doc .lore-cadence.flush p + p{ margin-top:.5em; }
+
+  .lore-fig{ margin:clamp(34px,5vh,52px) 0; }
+  .lore-fig img{ width:100%; height:auto; display:block; border:1px solid var(--rule); background:var(--void-2); }
+  .lore-fig figcaption{
+    margin-top:12px; font-family:var(--ui); font-size:10px; font-weight:400; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--ash);
+  }
+  /* let a figure break the column and run wider on desktop */
+
+  .lore-end{ margin-top:clamp(46px,7vh,72px); text-align:center; font-family:var(--display); font-size:13px; letter-spacing:.5em; color:var(--ash); }
+
+  @media (prefers-reduced-motion: reduce){ .lore-ov, .lore-doc, .lore-prog{ transition:none } }
+
+
+  /* ===== PAGE FLIP — the Blade of Time leaf mechanic, reusable so each dialog gets its own =====
+     A single leaf turns about its left edge: its front face is the page you were on, its back
+     face the page you are going to, and the destination already sits underneath. Pages here are
+     477x733, and contain rather than cover so no artwork is cropped. */
+  .bookflip{ margin:clamp(30px,5vh,46px) 0 0; }
+  .fb-stage{
+    position:relative; width:min(430px,86vw); aspect-ratio:477/733; margin:0 auto;
+    perspective:1900px; cursor:pointer; user-select:none;
+  }
+  .fb-stage img{ width:100%; height:100%; object-fit:contain; display:block; background:var(--void-2); }
+  .fb-base{ position:absolute; inset:0; border:1px solid var(--rule); }
+  .fb-leaf{ position:absolute; inset:0; display:none; transform-origin:left center; transform-style:preserve-3d; }
+  .fb-face{ position:absolute; inset:0; backface-visibility:hidden; border:1px solid var(--rule); overflow:hidden; }
+  .fb-back{ transform:rotateY(180deg); }
+  .fb-face::after{
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(90deg, rgba(0,0,0,.5), rgba(0,0,0,0) 26%);
+  }
+  .fb-back::after{ background:linear-gradient(270deg, rgba(0,0,0,.5), rgba(0,0,0,0) 26%); }
+  .fb-leaf.fwd-from{ display:block; transform:rotateY(0deg); opacity:1; }
+  .fb-leaf.fwd-to{
+    display:block; transform:rotateY(-172deg); opacity:0;
+    transition:transform .92s cubic-bezier(.34,.05,.24,1), opacity .3s ease .52s;
+  }
+  .fb-leaf.back-from{ display:block; transform:rotateY(-172deg); opacity:0; }
+  .fb-leaf.back-to{
+    display:block; transform:rotateY(0deg); opacity:1;
+    transition:transform .92s cubic-bezier(.34,.05,.24,1), opacity .3s ease;
+  }
+  .fb-bar{ display:flex; align-items:center; justify-content:center; gap:clamp(20px,4vw,34px); margin-top:clamp(20px,3vh,30px); }
+  .fb-btn{
+    width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center;
+    font-family:var(--ui); font-size:15px; line-height:1; cursor:pointer;
+    color:var(--glow); background:transparent; border:1px solid var(--glow);
+    transition:background .3s ease, color .3s ease, opacity .3s ease;
+  }
+  .fb-btn:hover:not(:disabled){ background:var(--glow); color:var(--void); }
+  .fb-btn:disabled{ opacity:.28; cursor:default; border-color:var(--ash); color:var(--ash); }
+  .fb-count{
+    font-family:var(--ui); font-size:11px; letter-spacing:.24em; text-transform:uppercase;
+    color:var(--bone-dim); min-width:74px; text-align:center;
+  }
+  .fb-stage:focus-visible, .fb-btn:focus-visible{ outline:2px solid var(--glow); outline-offset:4px; }
+  @media (prefers-reduced-motion: reduce){ .fb-leaf{ display:none !important; } }
+
 </style>
 </head>
 <body>
@@ -135,15 +267,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="vtext rise d1"><div class="vname">Hatter M: Seeking Wonder</div><p class="tagline">The Readers</p><p class="vbio">Readers become part of Hatter&#39;s mission, blurring the line between fiction and reality.</p></div>
     </div>
     <div class="visionary">
-      <div class="vimg rise"><img src="assets/img/lib-mad-again.jpg" alt="Hatter M Omnibus Collection: Mad Again" loading="lazy"></div>
+      <div class="vimg rise"><img src="assets/img/lib-mad-again.jpg" alt="Hatter M Omnibus Collection: Mad Again" loading="lazy"><button class="lore-cue" data-lore="madagain" type="button" aria-haspopup="dialog"><span class="lc-rule" aria-hidden="true"></span><span>Read Sample</span></button></div>
       <div class="vtext rise d1"><div class="vname">Mad Again</div><p class="tagline">Hatter M. Omnibus</p><p class="vbio">One man. Two worlds. Thirteen years. Hatter follows the fingerprints of Wonderland through human history, wherever Imagination leaves a trace.</p></div>
     </div>
     <div class="visionary">
-      <div class="vimg rise"><img src="assets/img/lib-crossfire.webp" alt="The Looking Glass Wars: Crossfire" loading="lazy"></div>
+      <div class="vimg rise"><img src="assets/img/lib-crossfire.webp" alt="The Looking Glass Wars: Crossfire" loading="lazy"><button class="lore-cue" data-lore="crossfire" type="button" aria-haspopup="dialog"><span class="lc-rule" aria-hidden="true"></span><span>Read Sample</span></button></div>
       <div class="vtext rise d1"><div class="vname">The Looking Glass Wars: Crossfire</div><p class="tagline">Rogue Hero</p><p class="vbio">Crossfire expands LGW beyond the throne, and introduces a new hero, <b>Ovid Grey.</b></p></div>
     </div>
     <div class="visionary">
-      <div class="vimg rise"><img src="assets/img/lib-underfire.webp" alt="The Looking Glass Wars: Underfire" loading="lazy"></div>
+      <div class="vimg rise"><img src="assets/img/lib-underfire.webp" alt="The Looking Glass Wars: Underfire" loading="lazy"><button class="lore-cue" data-lore="underfire" type="button" aria-haspopup="dialog"><span class="lc-rule" aria-hidden="true"></span><span>Read Sample</span></button></div>
       <div class="vtext rise d1"><div class="vname">The Looking Glass Wars: Underfire</div><p class="tagline">Every Story Expands the World</p><p class="vbio">UnderFire reveals the water nation of Unterlan.</p></div>
     </div>
     <div class="visionary">
@@ -182,7 +314,257 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </section>
 
 
+<!-- ===== READ SAMPLE — the Mad Again cue opens the passage, then pages from the book ===== -->
+<div class="lore-ov" id="lore-madagain" role="dialog" aria-modal="true" aria-labelledby="madagain-title" hidden>
+  <div class="lore-prog" aria-hidden="true"></div>
+  <button class="lore-close" type="button" aria-label="Close">&times;</button>
+  <article class="lore-doc" tabindex="-1">
+    <div class="lore-kicker">Hatter M. Omnibus</div>
+    <h2 class="lore-title" id="madagain-title">Mad Again</h2>
+    <p class="lore-lede">One man. Two worlds. Thirteen years.</p>
+    <div class="lore-rule"></div>
 
+    <div class="lore-h">The Search</div>
+    <p>Hatter Madigan has sworn his life to the Heart family.</p>
+    <p>Losing Alyss does not end that duty.</p>
+    <p>It transforms it.</p>
+    <p>For thirteen years, Hatter crosses our world searching for the lost princess.</p>
+    <p>But Hatter possesses an advantage no one on Earth understands.</p>
+    <p>He can sense Imagination.</p>
+    <div class="lore-cadence">
+      <p>Its glow.</p>
+      <p>Its traces.</p>
+      <p>Its disturbances.</p>
+    </div>
+    <p>And so his search for one girl becomes something much larger.</p>
+    <p>Hatter begins following the fingerprints of Wonderland through human history.</p>
+    <div class="lore-cadence">
+      <p>Across cities.</p>
+      <p>Across continents.</p>
+      <p>Across wars.</p>
+      <p>Across cultures.</p>
+    </div>
+    <p>He encounters inventors, warriors, mystics, artists, secret societies and extraordinary people whose lives seem somehow touched by the same force that shaped his own civilization.</p>
+    <div class="lore-cadence flush">
+      <p>Sometimes the connection is unmistakable.</p>
+      <p>Sometimes it is buried beneath history.</p>
+      <p>Sometimes it appears impossible.</p>
+    </div>
+    <p>But Hatter follows it.</p>
+
+    <div class="lore-h">Wherever Imagination leaves a trace, Hatter can follow it</div>
+    <p>And through Hatter&#39;s search, another truth begins to emerge:</p>
+    <p>Wonderland and Earth have been connected far longer than anyone realized.</p>
+
+    <div class="lore-h">Pages from the book</div>
+    <div class="bookflip" data-dir="assets/img/madagain/" data-prefix="ma" data-count="3" data-label="Mad Again sample">
+      <div class="fb-stage" tabindex="0" role="group" aria-label="Mad Again sample pages, use the arrow keys to turn">
+        <img class="fb-base" src="" alt="">
+        <div class="fb-leaf" aria-hidden="true">
+          <div class="fb-face fb-front"><img src="" alt=""></div>
+          <div class="fb-face fb-back"><img src="" alt=""></div>
+        </div>
+      </div>
+      <div class="fb-bar">
+        <button class="fb-btn fb-prev" type="button" aria-label="Previous page" disabled>&larr;</button>
+        <span class="fb-count" aria-live="polite"></span>
+        <button class="fb-btn fb-next" type="button" aria-label="Next page">&rarr;</button>
+      </div>
+    </div>
+
+
+    <div class="lore-end">&#10022;</div>
+  </article>
+</div>
+
+
+<div class="lore-ov" id="lore-crossfire" role="dialog" aria-modal="true" aria-labelledby="crossfire-title" hidden>
+  <div class="lore-prog" aria-hidden="true"></div>
+  <button class="lore-close" type="button" aria-label="Close">&times;</button>
+  <article class="lore-doc" tabindex="-1">
+    <div class="lore-kicker">Rogue Hero</div>
+    <h2 class="lore-title" id="crossfire-title">Crossfire</h2>
+    <p class="lore-lede">Crossfire expands LGW beyond the throne, and introduces a new hero, Ovid Grey.</p>
+    <div class="lore-rule"></div>
+
+    <div class="lore-h">Art gallery</div>
+    <div class="bookflip" data-dir="assets/img/crossfire/" data-prefix="cf" data-count="9" data-label="Crossfire art gallery">
+      <div class="fb-stage" tabindex="0" role="group" aria-label="Crossfire art gallery pages, use the arrow keys to turn">
+        <img class="fb-base" src="" alt="">
+        <div class="fb-leaf" aria-hidden="true">
+          <div class="fb-face fb-front"><img src="" alt=""></div>
+          <div class="fb-face fb-back"><img src="" alt=""></div>
+        </div>
+      </div>
+      <div class="fb-bar">
+        <button class="fb-btn fb-prev" type="button" aria-label="Previous page" disabled>&larr;</button>
+        <span class="fb-count" aria-live="polite"></span>
+        <button class="fb-btn fb-next" type="button" aria-label="Next page">&rarr;</button>
+      </div>
+    </div>
+
+
+    <div class="lore-end">&#10022;</div>
+  </article>
+</div>
+
+<div class="lore-ov" id="lore-underfire" role="dialog" aria-modal="true" aria-labelledby="underfire-title" hidden>
+  <div class="lore-prog" aria-hidden="true"></div>
+  <button class="lore-close" type="button" aria-label="Close">&times;</button>
+  <article class="lore-doc" tabindex="-1">
+    <div class="lore-kicker">Every Story Expands the World</div>
+    <h2 class="lore-title" id="underfire-title">Underfire</h2>
+    <p class="lore-lede">UnderFire reveals the water nation of Unterlan.</p>
+    <div class="lore-rule"></div>
+
+    <div class="lore-h">Art gallery</div>
+    <div class="bookflip" data-dir="assets/img/underfire/" data-prefix="uf" data-count="8" data-label="Underfire art gallery">
+      <div class="fb-stage" tabindex="0" role="group" aria-label="Underfire art gallery pages, use the arrow keys to turn">
+        <img class="fb-base" src="" alt="">
+        <div class="fb-leaf" aria-hidden="true">
+          <div class="fb-face fb-front"><img src="" alt=""></div>
+          <div class="fb-face fb-back"><img src="" alt=""></div>
+        </div>
+      </div>
+      <div class="fb-bar">
+        <button class="fb-btn fb-prev" type="button" aria-label="Previous page" disabled>&larr;</button>
+        <span class="fb-count" aria-live="polite"></span>
+        <button class="fb-btn fb-next" type="button" aria-label="Next page">&rarr;</button>
+      </div>
+    </div>
+
+
+    <div class="lore-end">&#10022;</div>
+  </article>
+</div>
+
+<script>
+(function(){
+  /* every .lore-cue[data-lore="x"] opens the dialog with id "lore-x" */
+  Array.prototype.forEach.call(document.querySelectorAll('.lore-cue[data-lore]'), function(cue){
+    var ov = document.getElementById('lore-' + cue.getAttribute('data-lore'));
+    if (!ov) return;
+    var doc = ov.querySelector('.lore-doc'),
+        closeBtn = ov.querySelector('.lore-close'),
+        prog = ov.querySelector('.lore-prog'),
+        lastFocus = null;
+
+    function open(){
+      lastFocus = document.activeElement;
+      ov.hidden = false;
+      void ov.offsetWidth;                     /* commit the hidden state so the fade actually runs */
+      ov.classList.add('open');
+      document.body.classList.add('lore-locked');
+      ov.scrollTop = 0; track();               /* every visit starts at the top of the scroll */
+      doc.focus();
+    }
+    function close(){
+      ov.classList.remove('open');
+      document.body.classList.remove('lore-locked');
+      setTimeout(function(){ if (!ov.classList.contains('open')) ov.hidden = true; }, 500);
+      if (lastFocus) lastFocus.focus();
+    }
+
+    function track(){
+      var max = ov.scrollHeight - ov.clientHeight;
+      prog.style.width = (max > 0 ? (ov.scrollTop / max) * 100 : 0) + '%';
+    }
+    ov.addEventListener('scroll', track, {passive:true});
+    window.addEventListener('resize', track);
+
+    cue.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    ov.addEventListener('mousedown', function(e){ if (e.target === ov) close(); });   /* the gutters beside the column close it */
+
+    ov.addEventListener('keydown', function(e){
+      if (e.key === 'Escape'){ e.preventDefault(); close(); return; }
+      if (e.key === 'Tab'){                    /* keep focus inside the dialog */
+        var f = ov.querySelectorAll('button, a[href]');
+        f = Array.prototype.filter.call(f, function(el){ return el.offsetParent !== null; });
+        if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+      }
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  /* one instance per .bookflip — no shared ids, so a page can carry as many as it likes */
+  Array.prototype.forEach.call(document.querySelectorAll('.bookflip'), function(root){
+    var DIR    = root.getAttribute('data-dir'),
+        PREFIX = root.getAttribute('data-prefix'),
+        TOTAL  = parseInt(root.getAttribute('data-count'), 10),
+        LABEL  = root.getAttribute('data-label') || 'Page';
+    if (!TOTAL) return;
+
+    var PAGES = [];
+    for (var n = 1; n <= TOTAL; n++) PAGES.push(DIR + PREFIX + '-' + ('00' + n).slice(-3) + '.jpg');
+
+    var stage = root.querySelector('.fb-stage'), base = root.querySelector('.fb-base'),
+        leaf  = root.querySelector('.fb-leaf'),
+        front = root.querySelector('.fb-front img'), back = root.querySelector('.fb-back img'),
+        prev  = root.querySelector('.fb-prev'), next = root.querySelector('.fb-next'),
+        count = root.querySelector('.fb-count');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var i = 0, busy = false, timer = null, started = false;
+
+    function pad(n){ return (n < 10 ? '0' : '') + n; }
+    function preload(n){ if (PAGES[n]) { var im = new Image(); im.src = PAGES[n]; } }
+    function paint(){
+      base.src = PAGES[i];
+      base.alt = LABEL + ' page ' + (i + 1) + ' of ' + TOTAL;
+      count.textContent = pad(i + 1) + ' / ' + pad(TOTAL);
+      prev.disabled = (i === 0); next.disabled = (i === TOTAL - 1);
+      preload(i + 1); preload(i - 1);
+    }
+    function settle(n){ clearTimeout(timer); leaf.className = 'fb-leaf'; i = n; busy = false; paint(); }
+    function turn(dir){
+      var n = i + dir;
+      if (busy || n < 0 || n >= TOTAL) return;
+      if (reduce){ settle(n); return; }
+      busy = true;
+      front.src = PAGES[dir > 0 ? i : n];
+      back.src  = PAGES[dir > 0 ? n : i];
+      base.src  = PAGES[n];
+      leaf.className = 'fb-leaf ' + (dir > 0 ? 'fwd-from' : 'back-from');
+      void leaf.offsetWidth;                                /* commit the start state */
+      leaf.className = 'fb-leaf ' + (dir > 0 ? 'fwd-to' : 'back-to');
+      timer = setTimeout(function(){ settle(n); }, 1100);   /* transitionend never fires on a hidden tab */
+    }
+    leaf.addEventListener('transitionend', function(e){
+      if (e.propertyName === 'transform' && busy) settle(i + (leaf.classList.contains('fwd-to') ? 1 : -1));
+    });
+
+    next.addEventListener('click', function(){ turn(1); });
+    prev.addEventListener('click', function(){ turn(-1); });
+    stage.addEventListener('click', function(e){
+      turn(e.clientX - stage.getBoundingClientRect().left < stage.offsetWidth / 3 ? -1 : 1);
+    });
+    stage.addEventListener('keydown', function(e){
+      if (e.key === 'ArrowRight' || e.key === ' '){ e.preventDefault(); turn(1); }
+      else if (e.key === 'ArrowLeft'){ e.preventDefault(); turn(-1); }
+    });
+    var x0 = null;
+    stage.addEventListener('touchstart', function(e){ x0 = e.changedTouches[0].clientX; }, {passive:true});
+    stage.addEventListener('touchend', function(e){
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40) turn(dx < 0 ? 1 : -1);
+    }, {passive:true});
+
+    /* hold off fetching pages until the dialog is actually opened, and start at page one each time */
+    var ov = root.closest('.lore-ov');
+    function begin(){ if (!started){ started = true; } settle(0); }
+    if (!ov){ begin(); return; }
+    new MutationObserver(function(){ if (!ov.hidden) begin(); })
+      .observe(ov, {attributes:true, attributeFilter:['hidden']});
+  });
+})();
+</script>
 
 <!-- ===== GLOBAL FOOTER (shared across all pages) ===== -->
 <style>
@@ -252,9 +634,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p class="ft-fine">&copy; 2026 The Looking Glass Wars</p>
   </div>
 </footer>
-
-
-
 
 
 <script>
