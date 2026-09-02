@@ -78,6 +78,132 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   footer a{ color:var(--glow); text-decoration:none; }
   a:focus-visible{ outline:2px solid var(--glow); outline-offset:4px; }
   @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} body::after{animation:none} .rise{opacity:1!important;transform:none!important;transition:none} }
+
+  /* ===== LORE SCROLL — a subtle cue under a place opens a scrolling lore dialog ===== */
+  .lore-cue{
+    display:inline-flex; align-items:center; gap:14px; margin-top:30px;
+    padding:0; background:none; border:0; cursor:pointer; -webkit-tap-highlight-color:transparent;
+    font-family:var(--ui); font-size:11px; font-weight:400; letter-spacing:.26em;
+    text-transform:uppercase; color:var(--ash); transition:color .45s ease;
+  }
+  .lore-cue .lc-rule{ display:block; width:28px; height:1px; background:var(--rule); transition:width .45s ease, background .45s ease; }
+  .lore-cue:hover, .lore-cue:focus-visible{ color:var(--glow); }
+  .lore-cue:hover .lc-rule, .lore-cue:focus-visible .lc-rule{ width:52px; background:var(--glow); }
+  .lore-cue:focus-visible{ outline:2px solid var(--glow); outline-offset:6px; }
+
+  .lore-ov{
+    position:fixed; inset:0; z-index:200; overflow-y:auto; overscroll-behavior:contain;
+    background:var(--void);   /* solid, so the page dissolves into the scroll rather than ghosting through */
+    opacity:0; visibility:hidden; transition:opacity .5s ease, visibility 0s linear .5s;
+  }
+  .lore-ov.open{ opacity:1; visibility:visible; transition:opacity .5s ease, visibility 0s; }
+  body.lore-locked{ overflow:hidden; }
+
+  /* hairline reading-progress bar across the very top of the dialog */
+  .lore-prog{ position:fixed; top:0; left:0; height:1px; width:0; background:var(--glow); opacity:.75; z-index:3; transition:width .12s linear; }
+
+  .lore-close{
+    position:fixed; top:calc(env(safe-area-inset-top) + 14px); right:14px; z-index:3;
+    width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center;
+    font-family:var(--ui); font-size:19px; line-height:1; cursor:pointer;
+    color:var(--glow); background:rgba(5,4,7,.7); border:1px solid var(--glow);
+    transition:background .3s ease, color .3s ease;
+  }
+  .lore-close:hover{ background:var(--glow); color:var(--void); }
+
+  .lore-doc{
+    max-width:640px; margin:0 auto;
+    padding:calc(env(safe-area-inset-top) + clamp(80px,12vh,130px)) var(--pad) calc(env(safe-area-inset-bottom) + clamp(70px,12vh,120px));
+    transform:translateY(18px); transition:transform .75s cubic-bezier(.2,.7,.2,1);
+  }
+  .lore-ov.open .lore-doc{ transform:none; }
+
+  .lore-kicker{ text-align:center; font-family:var(--ui); font-size:11px; font-weight:500; letter-spacing:.3em; text-transform:uppercase; color:var(--glow); }
+  .lore-title{ text-align:center; font-family:var(--display); font-weight:900; font-size:clamp(30px,6.4vw,52px); line-height:1.04; letter-spacing:.03em; color:var(--bone); margin-top:16px; text-wrap:balance; }
+  /* .lore-doc p below is more specific, so the lede is qualified to keep its own size and color */
+  .lore-doc .lore-lede{ text-align:center; font-family:var(--editorial); font-style:italic; font-weight:300; font-size:clamp(19px,3vw,26px); line-height:1.4; color:var(--bone); margin-top:20px; }
+  .lore-doc .lore-lede + .lore-lede{ margin-top:.75em; }
+  /* the two turns under the opening line drop back in size and take the glow */
+  .lore-doc .lore-lede.sub{ font-size:clamp(17px,2.4vw,21px); color:var(--glow); }
+  .lore-rule{ height:1px; background:var(--rule-soft); margin:clamp(32px,5vh,48px) 0; }
+
+  .lore-doc p{ font-family:var(--editorial); font-weight:300; font-size:clamp(18px,2.6vw,22px); line-height:1.55; color:var(--bone-dim); }
+  .lore-doc p + p{ margin-top:1.1em; }
+  .lore-h{
+    font-family:var(--display); font-weight:600; font-size:clamp(13px,2vw,15px); letter-spacing:.22em;
+    text-transform:uppercase; color:var(--bone); margin-top:clamp(40px,6vh,64px);
+    padding-top:22px; border-top:1px solid var(--rule-soft);
+  }
+  .lore-h + p{ margin-top:18px; }
+
+  /* the four Suit families — a ruled rank across the column */
+  .lore-suits{
+    display:grid; grid-template-columns:repeat(4,1fr); margin:clamp(34px,5vh,52px) 0;
+    border-top:1px solid var(--rule-soft); border-bottom:1px solid var(--rule-soft);
+  }
+  .lore-suits .suit{
+    display:flex; flex-direction:column; align-items:center; gap:11px;
+    padding:clamp(20px,3vh,28px) 6px; border-left:1px solid var(--rule-soft);
+  }
+  .lore-suits .suit:first-child{ border-left:none; }
+  .lore-suits .suit-mark{ font-size:19px; line-height:1; color:var(--ash); }
+  .lore-suits .suit-name{
+    font-family:var(--display); font-weight:600; font-size:clamp(11px,1.9vw,13px);
+    letter-spacing:.2em; text-transform:uppercase; color:var(--bone);
+  }
+  /* two-up below the point where four columns would crowd DIAMONDS */
+  @media(max-width:560px){
+    .lore-suits{ grid-template-columns:repeat(2,1fr); }
+    .lore-suits .suit:nth-child(odd){ border-left:none; }
+    .lore-suits .suit:nth-child(n+3){ border-top:1px solid var(--rule-soft); }
+  }
+
+  /* the cadence lines — each fragment steps a little further in */
+  .lore-cadence{ margin:clamp(34px,5vh,52px) 0; }
+  .lore-doc .lore-cadence p{
+    font-family:var(--editorial); font-style:italic; font-weight:300;
+    font-size:clamp(19px,2.9vw,25px); line-height:1.34; color:var(--bone);
+  }
+  .lore-doc .lore-cadence p + p{ margin-top:.4em; }
+  @media(min-width:700px){
+    .lore-cadence:not(.flush) p:nth-child(2){ padding-left:22px; }
+    .lore-cadence:not(.flush) p:nth-child(3){ padding-left:44px; }
+    .lore-cadence:not(.flush) p:nth-child(4){ padding-left:66px; }
+  }
+  /* .flush keeps lines too long to indent on one left edge */
+  .lore-doc .lore-cadence.flush p + p{ margin-top:.5em; }
+
+  .lore-fig{ margin:clamp(34px,5vh,52px) 0; }
+  .lore-fig img{ width:100%; height:auto; display:block; border:1px solid var(--rule); background:var(--void-2); }
+  .lore-fig figcaption{
+    margin-top:12px; font-family:var(--ui); font-size:10px; font-weight:400; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--ash);
+  }
+  /* let a figure break the column and run wider on desktop */
+  @media(min-width:900px){ .lore-fig.wide{ width:min(86vw,900px); margin-left:calc((640px - min(86vw,900px)) / 2); } }
+
+  /* a family portrait and the one line that lands under it */
+  .lore-fig.family{ margin-top:0; }
+  .lore-doc .lore-beat{
+    text-align:center;
+    font-family:var(--editorial); font-style:italic; font-weight:300;
+    font-size:clamp(21px,3.3vw,28px); line-height:1.3; color:var(--bone);
+    margin:clamp(44px,7vh,76px) 0 clamp(14px,2vh,20px);   /* the space belongs above the line, not below */
+  }
+
+  .lore-pull{
+    margin:clamp(34px,5vh,52px) 0; padding-left:26px; border-left:1px solid var(--glow);
+    font-family:var(--editorial); font-style:italic; font-size:clamp(21px,3.4vw,29px);
+    line-height:1.34; color:var(--bone);
+  }
+  .lore-doc .lore-final{
+    margin:clamp(72px,11vh,112px) 0 0; text-align:center;
+    font-family:var(--editorial); font-style:italic; font-weight:300;
+    font-size:clamp(24px,3.9vw,34px); line-height:1.24; color:var(--bone); text-wrap:balance;
+  }
+  .lore-end{ margin-top:clamp(46px,7vh,72px); text-align:center; font-family:var(--display); font-size:13px; letter-spacing:.5em; color:var(--ash); }
+
+  @media (prefers-reduced-motion: reduce){ .lore-ov, .lore-doc, .lore-prog{ transition:none } }
 </style>
 </head>
 <body>
@@ -152,6 +278,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="psub">The Capital of Imagination</div>
         <p class="ptext">The capital of Wonderland is where centuries of history meet impossible innovation. Quartz-like towers crowned with shimmering pyrite rise above ancient streets, while sleek glass transit glides silently through the city on cushions of air. Every district reflects the civilization that built it&mdash;part royal capital, part technological marvel, part living work of art.</p>
         <p class="ptext">Wondertropolis isn&#39;t simply where Wonderland&#39;s government resides. It&#39;s the beating heart of an extraordinary civilization.</p>
+        <button class="lore-cue" id="loreOpen" type="button" aria-haspopup="dialog"><span class="lc-rule" aria-hidden="true"></span><span>The Ruling Suit Families</span></button>
       </div>
     </div>
 
@@ -161,6 +288,130 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 
+
+
+<!-- ===== LORE SCROLL ===== -->
+<div class="lore-ov" id="loreOv" role="dialog" aria-modal="true" aria-labelledby="loreTitle" hidden>
+  <div class="lore-prog" id="loreProg" aria-hidden="true"></div>
+  <button class="lore-close" id="loreClose" type="button" aria-label="Close">&times;</button>
+
+  <article class="lore-doc" id="loreDoc" tabindex="-1">
+    <div class="lore-kicker">Wondertropolis</div>
+    <h2 class="lore-title" id="loreTitle">THE FOUR FAMILIES</h2>
+    <p class="lore-lede">Winning a throne is one thing. Governing a Queendom is another.</p>
+    <p class="lore-lede sub">The Hearts may occupy Wonderland&rsquo;s throne.</p>
+    <p class="lore-lede sub">They do not own Wonderland.</p>
+
+    <div class="lore-rule"></div>
+
+    <p>For generations, four great Suit families have competed for influence across the Queendom:</p>
+
+    <div class="lore-suits">
+      <div class="suit"><span class="suit-mark" aria-hidden="true">&hearts;</span><span class="suit-name">Hearts</span></div>
+      <div class="suit"><span class="suit-mark" aria-hidden="true">&spades;</span><span class="suit-name">Spades</span></div>
+      <div class="suit"><span class="suit-mark" aria-hidden="true">&clubs;</span><span class="suit-name">Clubs</span></div>
+      <div class="suit"><span class="suit-mark" aria-hidden="true">&diams;</span><span class="suit-name">Diamonds</span></div>
+    </div>
+
+    <div class="lore-cadence">
+      <p>Each has its own history.</p>
+      <p>Its own strengths.</p>
+      <p>Its own ambitions.</p>
+      <p>Its own relationship with power.</p>
+    </div>
+
+    <p class="lore-beat">Hearts have ruled.</p>
+    <figure class="lore-fig family">
+      <img src="assets/img/exp-hearts-family.jpg" alt="The House of Hearts" loading="lazy">
+    </figure>
+
+    <p class="lore-beat">Spades make exceptional spies</p>
+    <figure class="lore-fig family">
+      <img src="assets/img/exp-spades-family.jpg" alt="The House of Spades" loading="lazy">
+    </figure>
+
+    <p class="lore-beat">Clubs value strength and independence.</p>
+    <figure class="lore-fig family">
+      <img src="assets/img/exp-clubs-family.jpg" alt="The House of Clubs" loading="lazy">
+    </figure>
+
+    <p class="lore-beat">Diamonds understand commerce, influence and control.</p>
+    <figure class="lore-fig family">
+      <img src="assets/img/exp-diamonds-family.jpg" alt="The House of Diamonds" loading="lazy">
+    </figure>
+
+    <p>And beneath alliances forged in public are old resentments that don&rsquo;t disappear simply because a war has been won.</p>
+    <p>This becomes one of the great engines of Alyss&rsquo;s life after Redd.</p>
+
+    <div class="lore-cadence">
+      <p>She can defeat an enemy.</p>
+      <p>She cannot defeat politics.</p>
+    </div>
+
+    <p>The young princess who once fought to get home must become a Queen capable of holding together people who don&rsquo;t always agree on what Wonderland should become.</p>
+
+    <div class="lore-cadence flush">
+      <p>Rival Suit families challenge her.</p>
+      <p>Political alliances shift.</p>
+      <p>Attempts are made on her life.</p>
+      <p>Beyond Wonderland&rsquo;s borders, other rulers see opportunity.</p>
+    </div>
+
+    <p>And every compromise Alyss makes to preserve peace creates consequences of its own.</p>
+
+    <p class="lore-final">The throne turns out to be another battlefield.</p>
+
+    <div class="lore-end">&#10022;</div>
+  </article>
+</div>
+
+<script>
+(function(){
+  var ov = document.getElementById('loreOv'), doc = document.getElementById('loreDoc'),
+      openBtn = document.getElementById('loreOpen'), closeBtn = document.getElementById('loreClose'),
+      prog = document.getElementById('loreProg'), lastFocus = null;
+  if (!ov || !openBtn) return;
+
+  function open(){
+    lastFocus = document.activeElement;
+    ov.hidden = false;
+    void ov.offsetWidth;                     /* commit the hidden state so the fade actually runs */
+    ov.classList.add('open');
+    document.body.classList.add('lore-locked');
+    ov.scrollTop = 0; track();               /* every visit starts at the top of the scroll */
+    doc.focus();
+  }
+  function close(){
+    ov.classList.remove('open');
+    document.body.classList.remove('lore-locked');
+    setTimeout(function(){ if (!ov.classList.contains('open')) ov.hidden = true; }, 500);
+    if (lastFocus) lastFocus.focus();
+  }
+
+  function track(){
+    var max = ov.scrollHeight - ov.clientHeight;
+    prog.style.width = (max > 0 ? (ov.scrollTop / max) * 100 : 0) + '%';
+  }
+  ov.addEventListener('scroll', track, {passive:true});
+  window.addEventListener('resize', track);
+
+  openBtn.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+  ov.addEventListener('mousedown', function(e){ if (e.target === ov) close(); });   /* the gutters beside the column close it */
+
+  ov.addEventListener('keydown', function(e){
+    if (e.key === 'Escape'){ e.preventDefault(); close(); return; }
+    if (e.key === 'Tab'){                    /* keep focus inside the dialog */
+      var f = ov.querySelectorAll('button, a[href]');
+      f = Array.prototype.filter.call(f, function(el){ return el.offsetParent !== null; });
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+  });
+})();
+</script>
 
 <!-- ===== GLOBAL FOOTER (shared across all pages) ===== -->
 <style>
