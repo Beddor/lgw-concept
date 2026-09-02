@@ -182,6 +182,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   /* let a figure break the column and run wider on desktop */
   @media(min-width:900px){ .lore-fig.wide{ width:min(86vw,900px); margin-left:calc((640px - min(86vw,900px)) / 2); } }
 
+  /* the hand — one Card Soldier per Suit, the promise in bone, the turn in the glow */
+  .lore-hand{ margin:clamp(34px,5vh,52px) 0; }
+  .lore-hand .hand-row{
+    display:grid; grid-template-columns:1fr; gap:clamp(16px,2.6vw,28px);
+    padding:clamp(26px,4vh,38px) 0; border-top:1px solid var(--rule-soft);
+  }
+  .lore-hand .hand-row:last-child{ border-bottom:1px solid var(--rule-soft); }
+  .lore-hand .hand-portrait img{ width:100%; height:auto; display:block; border:1px solid var(--rule); background:var(--void-2); }
+  .lore-hand .hand-name{
+    display:flex; align-items:center; gap:10px; margin-bottom:12px;
+    font-family:var(--display); font-weight:600; font-size:clamp(11px,1.9vw,13px);
+    letter-spacing:.2em; text-transform:uppercase; color:var(--bone);
+  }
+  .lore-hand .hand-mark{ font-size:14px; line-height:1; color:var(--ash); }
+  .lore-doc .lore-hand p{ font-size:clamp(18px,2.5vw,21px); line-height:1.5; color:var(--bone); }
+  .lore-doc .lore-hand .hand-turn{ margin-top:.35em; font-style:italic; color:var(--glow); }
+  /* the soldier stands beside their line once there is room for both */
+  @media(min-width:620px){
+    .lore-hand .hand-row{ grid-template-columns:clamp(230px,42%,300px) 1fr; align-items:center; }
+  }
+
   /* a family portrait and the one line that lands under it */
   .lore-fig.family{ margin-top:0; }
   .lore-doc .lore-beat{
@@ -241,6 +262,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="pname">House of Cards</div>
         <div class="psub">Where Power Is Dealt</div>
         <p class="ptext">Wonderland&#39;s military and political command center. Here, strategy is forged, alliances rise and fall, and decks of Card Soldiers stand ready to be dealt into battle. Every kingdom has a seat of power. Wonderland built one from cards.</p>
+        <button class="lore-cue" data-lore="cards" type="button" aria-haspopup="dialog"><span class="lc-rule" aria-hidden="true"></span><span>Deal Your Hand</span></button>
       </div>
     </div>
 
@@ -278,7 +300,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="psub">The Capital of Imagination</div>
         <p class="ptext">The capital of Wonderland is where centuries of history meet impossible innovation. Quartz-like towers crowned with shimmering pyrite rise above ancient streets, while sleek glass transit glides silently through the city on cushions of air. Every district reflects the civilization that built it&mdash;part royal capital, part technological marvel, part living work of art.</p>
         <p class="ptext">Wondertropolis isn&#39;t simply where Wonderland&#39;s government resides. It&#39;s the beating heart of an extraordinary civilization.</p>
-        <button class="lore-cue" id="loreOpen" type="button" aria-haspopup="dialog"><span class="lc-rule" aria-hidden="true"></span><span>The Ruling Suit Families</span></button>
+        <button class="lore-cue" data-lore="families" type="button" aria-haspopup="dialog"><span class="lc-rule" aria-hidden="true"></span><span>The Ruling Suit Families</span></button>
       </div>
     </div>
 
@@ -291,13 +313,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 <!-- ===== LORE SCROLL ===== -->
-<div class="lore-ov" id="loreOv" role="dialog" aria-modal="true" aria-labelledby="loreTitle" hidden>
-  <div class="lore-prog" id="loreProg" aria-hidden="true"></div>
-  <button class="lore-close" id="loreClose" type="button" aria-label="Close">&times;</button>
+<div class="lore-ov" id="lore-families" role="dialog" aria-modal="true" aria-labelledby="loreFamiliesTitle" hidden>
+  <div class="lore-prog" aria-hidden="true"></div>
+  <button class="lore-close" type="button" aria-label="Close">&times;</button>
 
-  <article class="lore-doc" id="loreDoc" tabindex="-1">
+  <article class="lore-doc" tabindex="-1">
     <div class="lore-kicker">Wondertropolis</div>
-    <h2 class="lore-title" id="loreTitle">THE FOUR FAMILIES</h2>
+    <h2 class="lore-title" id="loreFamiliesTitle">THE FOUR FAMILIES</h2>
     <p class="lore-lede">Winning a throne is one thing. Governing a Queendom is another.</p>
     <p class="lore-lede sub">The Hearts may occupy Wonderland&rsquo;s throne.</p>
     <p class="lore-lede sub">They do not own Wonderland.</p>
@@ -364,51 +386,128 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="lore-end">&#10022;</div>
   </article>
 </div>
+<!-- ===== LORE SCROLL — House of Cards ===== -->
+<div class="lore-ov" id="lore-cards" role="dialog" aria-modal="true" aria-labelledby="loreCardsTitle" hidden>
+  <div class="lore-prog" aria-hidden="true"></div>
+  <button class="lore-close" type="button" aria-label="Close">&times;</button>
+
+  <article class="lore-doc" tabindex="-1">
+    <div class="lore-kicker">House of Cards</div>
+    <h2 class="lore-title" id="loreCardsTitle">THE HOUSE OF CARDS</h2>
+    <p class="lore-lede">Every hand is dealt from here.</p>
+
+    <div class="lore-rule"></div>
+
+    <p>At the center of Wonderland&rsquo;s military power stands the House of Cards.</p>
+
+    <div class="lore-cadence">
+      <p>Not a metaphor.</p>
+      <p>An institution.</p>
+    </div>
+
+    <p>Card Soldiers belong to the four Suits and possess different strengths, specialties and loyalties. They can be assembled into Hands designed for specific missions and dealt into battle at the Queen&rsquo;s discretion.</p>
+
+    <p>War in Wonderland isn&rsquo;t fought by anonymous armies. The hand matters: who you choose, which Suits you combine, what abilities they possess, and whether they trust one another.</p>
+
+    <div class="lore-hand">
+      <div class="hand-row">
+        <figure class="hand-portrait"><img src="assets/img/exp-cs-hearts.jpg" alt="A Hearts Card Soldier" loading="lazy"></figure>
+        <div>
+          <div class="hand-name"><span class="hand-mark" aria-hidden="true">&hearts;</span>Hearts</div>
+          <p>A Heart may win the battle before the first Card Soldier is dealt.</p>
+          <p class="hand-turn">Or become so certain of the strategy that they fail to see the move they never anticipated.</p>
+        </div>
+      </div>
+      <div class="hand-row">
+        <figure class="hand-portrait"><img src="assets/img/exp-cs-spades.jpg" alt="A Spades Card Soldier" loading="lazy"></figure>
+        <div>
+          <div class="hand-name"><span class="hand-mark" aria-hidden="true">&spades;</span>Spades</div>
+          <p>A Spade may possess precisely the intelligence a mission requires.</p>
+          <p class="hand-turn">Unless the Spade is spying on you.</p>
+        </div>
+      </div>
+      <div class="hand-row">
+        <figure class="hand-portrait"><img src="assets/img/exp-cs-clubs.jpg" alt="A Clubs Card Soldier" loading="lazy"></figure>
+        <div>
+          <div class="hand-name"><span class="hand-mark" aria-hidden="true">&clubs;</span>Clubs</div>
+          <p>A Club may be the warrior who saves the Hand.</p>
+          <p class="hand-turn">Or the one who starts the fight everyone was trying to avoid.</p>
+        </div>
+      </div>
+      <div class="hand-row">
+        <figure class="hand-portrait"><img src="assets/img/exp-cs-diamonds.jpg" alt="A Diamonds Card Soldier" loading="lazy"></figure>
+        <div>
+          <div class="hand-name"><span class="hand-mark" aria-hidden="true">&diams;</span>Diamonds</div>
+          <p>A Diamond may negotiate the alliance that prevents a war.</p>
+          <p class="hand-turn">Or decide the alliance is worth more broken.</p>
+        </div>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <p>The House of Cards is part Pentagon, part intelligence service, part weapons laboratory&mdash;the place where Wonderland prepares for the threats it knows are coming and invents answers to threats it hasn&rsquo;t imagined yet.</p>
+
+    <div class="lore-cadence">
+      <p>Every Card Soldier belongs to a Suit.</p>
+      <p>Every Suit belongs to a family.</p>
+    </div>
+
+    <p class="lore-final">Which means even Wonderland&rsquo;s army carries its politics into battle.</p>
+
+    <div class="lore-end">&#10022;</div>
+  </article>
+</div>
 
 <script>
 (function(){
-  var ov = document.getElementById('loreOv'), doc = document.getElementById('loreDoc'),
-      openBtn = document.getElementById('loreOpen'), closeBtn = document.getElementById('loreClose'),
-      prog = document.getElementById('loreProg'), lastFocus = null;
-  if (!ov || !openBtn) return;
+  /* every .lore-cue[data-lore="x"] opens the dialog with id "lore-x" */
+  Array.prototype.forEach.call(document.querySelectorAll('.lore-cue[data-lore]'), function(cue){
+    var ov = document.getElementById('lore-' + cue.getAttribute('data-lore'));
+    if (!ov) return;
+    var doc = ov.querySelector('.lore-doc'),
+        closeBtn = ov.querySelector('.lore-close'),
+        prog = ov.querySelector('.lore-prog'),
+        lastFocus = null;
 
-  function open(){
-    lastFocus = document.activeElement;
-    ov.hidden = false;
-    void ov.offsetWidth;                     /* commit the hidden state so the fade actually runs */
-    ov.classList.add('open');
-    document.body.classList.add('lore-locked');
-    ov.scrollTop = 0; track();               /* every visit starts at the top of the scroll */
-    doc.focus();
-  }
-  function close(){
-    ov.classList.remove('open');
-    document.body.classList.remove('lore-locked');
-    setTimeout(function(){ if (!ov.classList.contains('open')) ov.hidden = true; }, 500);
-    if (lastFocus) lastFocus.focus();
-  }
-
-  function track(){
-    var max = ov.scrollHeight - ov.clientHeight;
-    prog.style.width = (max > 0 ? (ov.scrollTop / max) * 100 : 0) + '%';
-  }
-  ov.addEventListener('scroll', track, {passive:true});
-  window.addEventListener('resize', track);
-
-  openBtn.addEventListener('click', open);
-  closeBtn.addEventListener('click', close);
-  ov.addEventListener('mousedown', function(e){ if (e.target === ov) close(); });   /* the gutters beside the column close it */
-
-  ov.addEventListener('keydown', function(e){
-    if (e.key === 'Escape'){ e.preventDefault(); close(); return; }
-    if (e.key === 'Tab'){                    /* keep focus inside the dialog */
-      var f = ov.querySelectorAll('button, a[href]');
-      f = Array.prototype.filter.call(f, function(el){ return el.offsetParent !== null; });
-      if (!f.length) return;
-      var first = f[0], last = f[f.length - 1];
-      if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    function open(){
+      lastFocus = document.activeElement;
+      ov.hidden = false;
+      void ov.offsetWidth;                     /* commit the hidden state so the fade actually runs */
+      ov.classList.add('open');
+      document.body.classList.add('lore-locked');
+      ov.scrollTop = 0; track();               /* every visit starts at the top of the scroll */
+      doc.focus();
     }
+    function close(){
+      ov.classList.remove('open');
+      document.body.classList.remove('lore-locked');
+      setTimeout(function(){ if (!ov.classList.contains('open')) ov.hidden = true; }, 500);
+      if (lastFocus) lastFocus.focus();
+    }
+
+    function track(){
+      var max = ov.scrollHeight - ov.clientHeight;
+      prog.style.width = (max > 0 ? (ov.scrollTop / max) * 100 : 0) + '%';
+    }
+    ov.addEventListener('scroll', track, {passive:true});
+    window.addEventListener('resize', track);
+
+    cue.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    ov.addEventListener('mousedown', function(e){ if (e.target === ov) close(); });   /* the gutters beside the column close it */
+
+    ov.addEventListener('keydown', function(e){
+      if (e.key === 'Escape'){ e.preventDefault(); close(); return; }
+      if (e.key === 'Tab'){                    /* keep focus inside the dialog */
+        var f = ov.querySelectorAll('button, a[href]');
+        f = Array.prototype.filter.call(f, function(el){ return el.offsetParent !== null; });
+        if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+      }
+    });
   });
 })();
 </script>
