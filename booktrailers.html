@@ -21,10 +21,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-W3QTX3VS');</script>
 <!-- End Google Tag Manager -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>House of Cards — The Looking Glass Wars</title>
-<meta name="description" content="Every hand is dealt from here. The House of Cards is the seat of Wonderland's government.">
-<meta property="og:title" content="House of Cards — The Looking Glass Wars">
-<meta property="og:description" content="Every hand is dealt from here.">
+<title>Book Trailers — The Looking Glass Wars</title>
+<meta name="description" content="Book trailers from The Looking Glass Wars — the world of Wonderland as it was meant to be seen.">
+<meta property="og:title" content="Book Trailers — The Looking Glass Wars">
+<meta property="og:description" content="The world of Wonderland as it was meant to be seen.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,10 +58,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .band{ padding:clamp(60px,10vh,130px) 0; }
   .center{ text-align:center; }
 
+  .eyebrow{ font-family:var(--ui); font-size:11px; font-weight:500; letter-spacing:.36em; text-transform:uppercase; color:var(--glow); display:inline-flex; align-items:center; gap:12px; }
+  .eyebrow::before,.eyebrow::after{ content:''; width:26px; height:1px; background:var(--glow); opacity:.5; }
+
   h1.title{ font-family:var(--display); font-weight:900; font-size:clamp(32px,7.5vw,74px); line-height:1.02; letter-spacing:.03em; text-align:center; text-wrap:balance; text-shadow:0 0 60px rgba(143,215,255,.10); }
   .subtitle{ font-family:var(--editorial); font-style:italic; font-size:clamp(19px,3.4vw,28px); color:var(--glow); text-align:center; letter-spacing:.02em; }
 
-  .hero{ min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:calc(env(safe-area-inset-top) + 92px) var(--pad) clamp(36px,6vh,70px); gap:clamp(20px,3.6vh,34px); }
+  /* Short hero — the trailers start just below the fold rather than a full screen down */
+  .hero{ min-height:auto; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+         padding:calc(env(safe-area-inset-top) + 132px) var(--pad) clamp(30px,5vh,54px); gap:clamp(18px,3vh,30px); }
+  .intro{ max-width:56ch; margin:0 auto; font-family:var(--editorial); font-size:clamp(19px,3vw,26px); line-height:1.5; color:var(--bone-dim); text-align:center; }
 
   /* video facade */
   .ytfacade{ position:relative; background:#000 center/cover no-repeat; border:1px solid var(--rule); cursor:pointer; overflow:hidden; margin:0 auto; }
@@ -70,12 +76,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .ytplay{ position:absolute; z-index:2; top:50%; left:50%; transform:translate(-50%,-50%); width:76px; height:76px; border-radius:50%; border:1px solid var(--glow); background:radial-gradient(circle, rgba(143,215,255,.20), rgba(6,5,9,.55) 72%); box-shadow:0 0 40px rgba(143,215,255,.18); cursor:pointer; padding:0; }
   .ytplay::after{ content:''; position:absolute; top:50%; left:56%; transform:translate(-50%,-50%); width:0;height:0; border-left:20px solid var(--glow); border-top:12px solid transparent; border-bottom:12px solid transparent; }
   .ytfacade iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; z-index:3; }
-  /* sized off viewport height so the trailer never runs past the fold */
-  /* width drives the box so aspect-ratio always holds — a separate height would
-     let max-width squeeze the frame portrait and crop the 16:9 art */
-  .hero .ytfacade{ width:min(900px, 100%, calc(52svh * 16 / 9)); aspect-ratio:16/9; }
+  /* trailers are 16/9 unless a card opts into .short (vertical) */
+  .ytfacade.wide{ width:100%; aspect-ratio:16/9; }
+  .ytfacade.short{ height:min(56svh,620px); aspect-ratio:9/16; width:auto; max-width:84vw; }
+  /* until a poster image is supplied the card still reads as intentional */
+  .ytfacade:not([style*="background-image"]){ background-image:radial-gradient(circle at 50% 40%, #1b1723, #0b0910 70%); }
+  .ytplay{ transition:box-shadow .35s ease, background .35s ease; }
+  .trailer:hover .ytplay{ box-shadow:0 0 60px rgba(143,215,255,.32); }
 
-  .flavor{ max-width:46ch; margin:0 auto; font-family:var(--editorial); font-style:italic; font-size:clamp(19px,3.2vw,27px); line-height:1.45; color:var(--bone); text-align:center; }
+  /* Trailer list — one video per row at every width, each row centred and capped
+     at the 860px the rest of the site uses for video so it never gets unwieldy */
+  .trailers{ display:flex; flex-direction:column; gap:clamp(48px,8vh,96px); }
+  .trailer{ display:flex; flex-direction:column; width:min(100%,860px); margin:0 auto; text-align:center; }
+  .tr-title{ font-family:var(--display); font-weight:700; font-size:clamp(19px,2.6vw,26px); letter-spacing:.02em; color:var(--bone); margin-top:22px; }
+  .tr-meta{ font-family:var(--ui); font-size:11px; font-weight:500; letter-spacing:.24em; text-transform:uppercase; color:var(--ash); margin-top:10px; }
+  .tr-copy{ font-family:var(--editorial); font-style:italic; font-weight:300; font-size:clamp(17px,2.4vw,21px); line-height:1.45; color:var(--bone-dim); margin-top:12px; max-width:54ch; margin-left:auto; margin-right:auto; }
 
   .btn{ display:inline-flex; align-items:center; gap:12px; font-family:var(--ui); font-size:12px; font-weight:500; letter-spacing:.24em; text-transform:uppercase; color:var(--void); background:var(--glow); border:1px solid var(--glow); padding:18px 44px; cursor:pointer; text-decoration:none; transition:all .35s ease; }
   .btn:hover{ background:transparent; color:var(--glow); box-shadow:0 0 40px rgba(143,215,255,.2); }
@@ -84,9 +99,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .rise.in{ opacity:1; transform:none; }
   .rise.d1{transition-delay:.15s} .rise.d2{transition-delay:.3s} .rise.d3{transition-delay:.45s}
 
-  footer{ padding:56px var(--pad) calc(env(safe-area-inset-bottom) + 48px); text-align:center; border-top:1px solid var(--rule-soft); }
-  footer .fm{ font-family:var(--display); font-size:11px; letter-spacing:.34em; text-transform:uppercase; color:var(--bone-dim); }
-  footer a{ color:var(--glow); text-decoration:none; }
   a:focus-visible,button:focus-visible{ outline:2px solid var(--glow); outline-offset:4px; }
   @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} body::after{animation:none} .rise{opacity:1!important;transform:none!important;transition:none} }
 </style>
@@ -99,20 +111,57 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <nav>
   <a class="wm" href="index.html">The Looking Glass Wars</a>
-  <a class="back" href="visionaries.html">&larr; Back</a>
+  <a class="back" href="index.html">&larr; Back</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <h1 class="title rise">House of Cards</h1>
-  <p class="subtitle rise d1">Every hand is dealt from here.</p>
-  <div class="ytfacade rise d2" data-yt="Fctxm-lXpCk" style="background-image:url('assets/img/viz-hoc-thumb.webp')"><button class="ytplay" aria-label="Play - House of Cards trailer"></button></div>
+  <h1 class="title rise">BOOK<br>TRAILERS</h1>
+  <p class="subtitle rise d1">Wonderland, as it was meant to be seen.</p>
 </section>
 
-<!-- FLAVOR -->
-<section class="band" style="padding-top:0">
+<!-- TRAILERS
+     ------------------------------------------------------------------
+     To add a trailer, copy one .trailer block below and fill in:
+       data-yt ................ the YouTube video id (the part after v=)
+       background-image ....... poster frame, e.g. assets/img/bt-name-thumb.webp
+                                (omit the whole style= and a dark placeholder
+                                 is drawn instead — the card still looks right)
+       aria-label ............. "Play - <trailer name>"  — analytics.js reads
+                                this for the video_play event's video_title,
+                                so keep the "Play - " prefix
+       .tr-title / .tr-meta / .tr-copy ... name, year or book, one-line blurb
+                                (.tr-meta and .tr-copy are both optional)
+     Use class "ytfacade wide" for a normal 16:9 trailer, or "ytfacade short"
+     for a vertical/social cut. Cards stack one per row in the order written here,
+     and each reveals itself as it scrolls into view — no rise delay needed.
+     ------------------------------------------------------------------ -->
+<section class="band" style="padding-top:clamp(20px,4vh,44px)">
   <div class="wrap">
-    <p class="flavor rise">The House of Cards is the seat of Wonderland&#39;s government, where strategy, invention, and power determine the fate of a civilization.</p>
+    <div class="trailers">
+
+      <article class="trailer rise">
+        <div class="ytfacade wide" data-yt="6Rt8vUshEzA" style="background-image:url('assets/img/wildcards-thumb.webp')">
+          <button class="ytplay" aria-label="Play - Wild Cards Trailer"></button>
+        </div>
+        <h2 class="tr-title">Wild Cards Trailer</h2>
+      </article>
+
+      <article class="trailer rise">
+        <div class="ytfacade wide" data-yt="48VfnDZGd6g" style="background-image:url('assets/img/bt-uk-trailer-thumb.jpg')">
+          <button class="ytplay" aria-label="Play - UK Looking Glass Wars Trailer"></button>
+        </div>
+        <h2 class="tr-title">UK Looking Glass Wars Trailer</h2>
+      </article>
+
+      <article class="trailer rise">
+        <div class="ytfacade wide" data-yt="LqyHNSDgUSc" style="background-image:url('assets/img/bt-epk-thumb.jpg')">
+          <button class="ytplay" aria-label="Play - Looking Glass Wars EPK"></button>
+        </div>
+        <h2 class="tr-title">Looking Glass Wars EPK</h2>
+      </article>
+
+    </div>
   </div>
 </section>
 
@@ -170,11 +219,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <nav class="ft-nav" aria-label="Site">
       <a href="index.html">The Story</a>
-      <a href="booktrailers.html">Book Trailers</a>
+      <a href="booktrailers.html" aria-current="page">Book Trailers</a>
       <a href="visionaries.html">Art Book</a>
       <a href="bladeoftime.html">Graphic Novel</a>
       <a href="soundofwonder.html">Musical</a>
-      <a href="houseofcards.html" aria-current="page">Game</a>
+      <a href="houseofcards.html">Game</a>
       <a href="millinery.html">New Novel</a>
       <a href="library.html">The Library</a>
       <a href="explore.html">Explore Wonderland</a>
