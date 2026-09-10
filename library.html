@@ -48,9 +48,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   section{ position:relative; z-index:3; }
   .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 var(--pad); }
   .band{ padding:clamp(50px,8vh,110px) 0; }
+  /* the band under the hero closes up: half the gap below the lede, other bands unchanged */
+  .hero + .band{ padding-top:clamp(25px,4vh,55px); }
   .center{ text-align:center; }
   h1.title{ font-family:var(--display); font-weight:900; font-size:clamp(30px,7vw,68px); line-height:1.04; letter-spacing:.03em; text-align:center; text-wrap:balance; text-shadow:0 0 60px rgba(143,215,255,.10); }
-  .hero{ min-height:56svh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:calc(env(safe-area-inset-top) + 130px) var(--pad) clamp(40px,7vh,80px); gap:24px; }
+  .hero{ min-height:56svh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:calc(env(safe-area-inset-top) + 130px) var(--pad) clamp(20px,3.5vh,40px); gap:24px; }
   .hero .lede{ max-width:46ch; font-family:var(--editorial); font-size:clamp(18px,3.2vw,26px); line-height:1.45; color:var(--bone-dim); }
   .seg{ text-align:center; margin:0 auto clamp(20px,4vh,44px); }
   .seg .seg-head{ font-family:var(--display); font-weight:900; font-size:clamp(28px,6vw,54px); line-height:1.05; letter-spacing:.04em; color:var(--bone); text-shadow:0 0 50px rgba(143,215,255,.10); }
